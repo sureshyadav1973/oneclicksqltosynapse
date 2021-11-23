@@ -34,7 +34,7 @@ $fileList = Invoke-Sqlcmd `
                     -ServerInstance . `
                     -UserName $username `
                     -Password $password `
-                    -Query "restore filelistonly from disk='$($pwd)\AdventureWorks2016.bak'";
+                    -Query "restore filelistonly from disk='$($pwd)\tpcds.bak'";
 
 # Create move records for each file in the backup
 $relocateFiles = @();
@@ -55,6 +55,6 @@ Restore-SqlDatabase `
 	-ReplaceDatabase `
 	-ServerInstance . `
 	-Database "SampleDatabase" `
-	-BackupFile "$pwd\AdventureWorks2016.bak" `
+	-BackupFile "$pwd\tpcds.bak" `
 	-RelocateFile $relocateFiles `
 	-Credential $credentials; 
