@@ -10,7 +10,7 @@
             }
         },
         "createPublicIP": {
-            "defaultValue": true,
+            "defaultValue": false,
             "type": "bool",
             "metadata": {
                 "description": "Do you want to create a public IP address for the source server?"
