@@ -41,19 +41,7 @@
             },
             "defaultValue": "Standard_D8s_v3"
         },
-        "targetSqlDbAdministratorLogin": {
-            "type": "string",
-            "metadata": {
-                "description": "Administrator User name for the Target Azure SQL DB Server."
-            }
-        },
-        "targetSqlDbAdministratorPassword": {
-            "type": "securestring",
-            "metadata": {
-                "description": "Administrator Password for the Target Azure SQL DB Server."
-            }
-        },
-        "_artifactsLocation": {
+       "_artifactsLocation": {
             "type": "string",
             "metadata": {
                 "description": "The base URI where artifacts required by this template are located including a trailing '/'"
@@ -71,7 +59,6 @@
     "variables": {
         "DMSServiceName": "[concat('DMS', uniqueString(resourceGroup().id))]",
         "sourceServerName": "[take(concat('Source', uniqueString(resourceGroup().id)), 15)]",
-        "targetServerName": "[concat('targetservername', uniqueString(resourceGroup().id))]",
         "scriptLocation": "adddatabase.ps1",
         "bakFileLocation": "tpcds.bak",
         "scriptFiles": [
@@ -467,68 +454,6 @@
                     "keySource": "Microsoft.Storage"
                 }
             }
-        },
-        {
-            "type": "Microsoft.Sql/servers",
-            "name": "[concat(variables('targetServerName'))]",
-            "apiVersion": "2020-02-02-preview",
-            "location": "[parameters('location')]",
-            "properties": {
-                "administratorLogin": "[parameters('targetSqlDbAdministratorLogin')]",
-                "administratorLoginPassword": "[parameters('targetSqlDbAdministratorPassword')]",
-                "version": "12.0"
-            },
-            "resources": [
-                {
-                    "type": "databases",
-                    "sku": {
-                        "name": "S3",
-                        "tier": "Standard"
-                    },
-                    "name": "[variables('databaseName')]",
-                    "apiVersion": "2020-02-02-preview",
-                    "location": "[parameters('location')]",
-                    "dependsOn": [
-                        "[resourceId('Microsoft.Sql/servers', concat(variables('targetServerName')))]"
-                    ],
-                    "properties": {
-                        "collation": "SQL_Latin1_General_CP1_CI_AS",
-                        "maxSizeBytes": 2147483648,
-                        "zoneRedundant": false
-                    },
-                    "resources": [
-                        {
-                            "name": "Import",
-                            "type": "extensions",
-                            "apiVersion": "2014-04-01",
-                            "dependsOn": [
-                                "[resourceId('Microsoft.Sql/servers/databases', variables('targetServerName'), variables('databaseName'))]"
-                            ],
-                            "properties": {
-                                "storageKey": "[parameters('_artifactsLocationSasToken')]",
-                                "storageKeyType": "SharedAccessKey",
-                                "storageUri": "[uri(parameters('_artifactsLocation'), 'templatefiles/AdventureWorks2016.bacpac')]",
-                                "administratorLogin": "[parameters('targetSqlDbAdministratorLogin')]",
-                                "administratorLoginPassword": "[parameters('targetSqlDbAdministratorPassword')]",
-                                "operationMode": "Import"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "type": "firewallrules",
-                    "name": "AllowAllWindowsAzureIps",
-                    "apiVersion": "2020-02-02-preview",
-                    "location": "[parameters('location')]",
-                    "dependsOn": [
-                        "[resourceId('Microsoft.Sql/servers', concat(variables('targetServerName')))]"
-                    ],
-                    "properties": {
-                        "endIpAddress": "0.0.0.0",
-                        "startIpAddress": "0.0.0.0"
-                    }
-                }
-            ]
         }
     ]
 }
