@@ -226,19 +226,13 @@
                     "name": "removescript",
                     "location": "[parameters('location')]",
                     "kind": "AzureCLI",
-                    "identity": {
-                        "type": "UserAssigned",
-                        "userAssignedIdentities": {
-                            "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName'))]": {}
-                        }
-                    },
                     "dependsOn": [
                         "[resourceId('Microsoft.Compute/virtualMachines/', variables('sourceServerName'))]",
                         "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'SqlIaasExtension')]",
                         "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'CustomScriptExtension')]"
         ],
         "properties": {
-            "forceUpdateTag": "[parameters('utcValue')]",
+            "forceUpdateTag": "1",
             "AzCliVersion": "2.2.0",
             "timeout": "PT30M",
             "arguments": "[concat(variables('sourceServerName'), ' ', resourceGroup().name)]",
