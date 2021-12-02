@@ -220,6 +220,33 @@
                         }
                     }
                 },
+                {
+        "type": "Microsoft.Resources/deploymentScripts",
+        "apiVersion": "2020-10-01",
+        "name": "RemoveCustomscriptextension",
+        "location": "[resourceGroup().location]",
+        "kind": "AzureCLI",
+        "identity": {
+            "type": "UserAssigned",
+            "userAssignedIdentities": {
+                "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName'))]": {}
+            }
+        },
+        "dependsOn": [
+                        "[resourceId('Microsoft.Compute/virtualMachines/', variables('sourceServerName'))]",
+                        "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'SqlIaasExtension')]",
+                        "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'CustomScriptExtension')]"
+        ],
+        "properties": {
+            "forceUpdateTag": "[parameters('utcValue')]", // To force run script on redeployment
+            "AzCliVersion": "2.2.0",
+            "timeout": "PT30M",
+            "arguments": "[concat(variables('sourceServerName'), ' ', resourceGroup().name)]",
+            "scriptContent": "az vm extension delete -g $2 --vm-name $1 -n CustomScriptExtension", // Az CLI Command to remove an extension
+            "cleanupPreference": "OnSuccess",
+            "retentionInterval": "P1D"
+        }
+    },
                   {
                     "apiVersion": "2019-12-01",
                     "type": "extensions",
@@ -228,12 +255,13 @@
                     "dependsOn": [
                         "[resourceId('Microsoft.Compute/virtualMachines/', variables('sourceServerName'))]",
                         "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'SqlIaasExtension')]",
-                        "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'CustomScriptExtension')]"
+                        "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'CustomScriptExtension')]",
+                        "[resourceId('Microsoft.Resources/deploymentScripts', 'RemoveCustomscriptextension']"
                     ],
                     "properties": {
                         "publisher": "Microsoft.Compute",
                         "type": "CustomScriptExtension",
-                        "typeHandlerVersion": "2.0",
+                        "typeHandlerVersion": "1.9",
                         "autoUpgradeMinorVersion": true,
                         "settings": {
                             "fileUris": "[variables('scriptFiles')]"
