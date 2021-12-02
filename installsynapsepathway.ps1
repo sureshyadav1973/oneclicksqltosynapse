@@ -1,7 +1,3 @@
-param(
- [string]
- $gatewayKey
-)
 
 # init log setting
 $logLoc = "$env:SystemDrive\WindowsAzure\Logs\Plugins\Microsoft.Compute.CustomScriptExtension\"
@@ -10,7 +6,7 @@ if (! (Test-Path($logLoc)))
     New-Item -path $logLoc -type directory -Force
 }
 $logPath = "$logLoc\tracelog.log"
-"Start to excute gatewayInstall.ps1. `n" | Out-File $logPath
+"Start to excute installsynapsepathway.ps1. `n" | Out-File $logPath
 
 function Now-Value()
 {
@@ -156,25 +152,17 @@ function Get-InstalledFilePath()
 	return $filePath
 }
 
-function Register-Gateway([string] $instanceKey)
-{
-    Trace-Log "Register Agent"
-	$filePath = Get-InstalledFilePath
-	Run-Process $filePath "-era 8060"
-	Run-Process $filePath "-k $instanceKey"
-    Trace-Log "Agent registration is successful!"
-}
 
 
 
 Trace-Log "Log file: $logLoc"
-$uri = "https://go.microsoft.com/fwlink/?linkid=839822"
-Trace-Log "Gateway download fw link: $uri"
-$gwPath= "$PWD\gateway.msi"
-Trace-Log "Gateway download location: $gwPath"
+$uri = "https://download.microsoft.com/download/a/0/a/a0a5ea88-ea47-4897-bb68-3e9483673523/AzureSynapsePathway.msi"
+Trace-Log "Pathway download fw link: $uri"
+$gwPath= "$PWD\AzureSynapsePathway.msi"
+Trace-Log "Pathway download location: $gwPath"
 
 
 Download-Gateway $uri $gwPath
 Install-Gateway $gwPath
 
-Register-Gateway $gatewayKey
+
