@@ -223,7 +223,7 @@
                 {
                     "type": "Microsoft.Resources/deploymentScripts",
                     "apiVersion": "2020-10-01",
-                    "name": "RemoveCustomscriptextension",
+                    "name": "removescript",
                     "location": "[parameters('location')]",
                     "kind": "AzureCLI",
                     "identity": {
@@ -246,7 +246,7 @@
             "cleanupPreference": "OnSuccess",
             "retentionInterval": "P1D"
         }
-    }
+    },
                   {
                     "apiVersion": "2019-12-01",
                     "type": "extensions",
