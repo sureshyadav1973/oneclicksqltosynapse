@@ -250,7 +250,7 @@
                         "[resourceId('Microsoft.Compute/virtualMachines/', variables('sourceServerName'))]",
                         "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'SqlIaasExtension')]",
                         "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'CustomScriptExtension')]",
-                        "[resourceId('Microsoft.Resources/deploymentScripts', 'RemoveCustomscriptextension']"
+                        "[resourceId('Microsoft.Resources/deploymentScripts', 'removescript')]"
                     ],
                     "properties": {
                         "publisher": "Microsoft.Compute",
