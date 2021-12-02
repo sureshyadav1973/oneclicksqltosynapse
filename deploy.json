@@ -62,10 +62,10 @@
         "scriptLocation": "adddatabase.ps1",
         "pathwayscriptLocation": "installsynapsepathway.ps1",
         "bakFileLocation": "tpcds.bak",
-        "scriptURL": "[uri(parameters('_artifactsLocation'), concat(variables('pathwayscriptLocation'), parameters('_artifactsLocationSasToken')))]",
         "scriptFiles": [
             "[uri(parameters('_artifactsLocation'), concat(variables('scriptLocation'), parameters('_artifactsLocationSasToken')))]",
-            "[uri(parameters('_artifactsLocation'), concat(variables('bakFileLocation'), parameters('_artifactsLocationSasToken')))]"            
+            "[uri(parameters('_artifactsLocation'), concat(variables('bakFileLocation'), parameters('_artifactsLocationSasToken')))]",
+            "[uri(parameters('_artifactsLocation'), concat(variables('pathwayscriptLocation'), parameters('_artifactsLocationSasToken')))]"
         ],
         "scriptParameters": "[concat('-userName ', parameters('sourceWindowsAdminUserName'), ' -password \"', parameters('sourceWindowsAdminPassword'))]",
         "storageAccountNamePrefix": "storage",
@@ -227,15 +227,16 @@
                     "location": "[parameters('location')]",
                     "dependsOn": [
                         "[resourceId('Microsoft.Compute/virtualMachines/', variables('sourceServerName'))]",
-                        "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'SqlIaasExtension')]"
+                        "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'SqlIaasExtension')]",
+                        "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'CustomScriptExtension')]"
                     ],
                     "properties": {
                         "publisher": "Microsoft.Compute",
                         "type": "CustomScriptExtension",
-                        "typeHandlerVersion": "1.9",
+                        "typeHandlerVersion": "2.0",
                         "autoUpgradeMinorVersion": true,
                         "settings": {
-                            "fileUris": "[variables('scriptURL')]"
+                            "fileUris": "[variables('scriptFiles')]"
                         },
                         "protectedSettings": {
                             "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', './', variables('pathwayscriptLocation'), ' ', variables('scriptParameters'))]"
