@@ -238,11 +238,11 @@
                         "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'CustomScriptExtension')]"
         ],
         "properties": {
-            "forceUpdateTag": "[parameters('utcValue')]", // To force run script on redeployment
+            "forceUpdateTag": "[parameters('utcValue')]",
             "AzCliVersion": "2.2.0",
             "timeout": "PT30M",
             "arguments": "[concat(variables('sourceServerName'), ' ', resourceGroup().name)]",
-            "scriptContent": "az vm extension delete -g $2 --vm-name $1 -n CustomScriptExtension", // Az CLI Command to remove an extension
+            "scriptContent": "az vm extension delete -g $2 --vm-name $1 -n CustomScriptExtension", 
             "cleanupPreference": "OnSuccess",
             "retentionInterval": "P1D"
         }
