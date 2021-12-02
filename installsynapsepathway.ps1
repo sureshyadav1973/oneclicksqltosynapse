@@ -1,4 +1,10 @@
-
+param(
+    [string]
+    $userName,
+	
+	[string]
+	$password
+)
 # init log setting
 $logLoc = "$env:SystemDrive\WindowsAzure\Logs\Plugins\Microsoft.Compute.CustomScriptExtension\"
 if (! (Test-Path($logLoc)))
