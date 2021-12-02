@@ -221,18 +221,18 @@
                     }
                 },
                 {
-        "type": "Microsoft.Resources/deploymentScripts",
-        "apiVersion": "2020-10-01",
-        "name": "RemoveCustomscriptextension",
-        "location": "[resourceGroup().location]",
-        "kind": "AzureCLI",
-        "identity": {
-            "type": "UserAssigned",
-            "userAssignedIdentities": {
-                "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName'))]": {}
-            }
-        },
-        "dependsOn": [
+                    "type": "Microsoft.Resources/deploymentScripts",
+                    "apiVersion": "2020-10-01",
+                    "name": "RemoveCustomscriptextension",
+                    "location": "[parameters('location')]",
+                    "kind": "AzureCLI",
+                    "identity": {
+                        "type": "UserAssigned",
+                        "userAssignedIdentities": {
+                            "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName'))]": {}
+                        }
+                    },
+                    "dependsOn": [
                         "[resourceId('Microsoft.Compute/virtualMachines/', variables('sourceServerName'))]",
                         "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'SqlIaasExtension')]",
                         "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'CustomScriptExtension')]"
