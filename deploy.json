@@ -60,10 +60,12 @@
         "DMSServiceName": "[concat('DMS', uniqueString(resourceGroup().id))]",
         "sourceServerName": "[take(concat('Source', uniqueString(resourceGroup().id)), 15)]",
         "scriptLocation": "adddatabase.ps1",
+        "pathwayscriptLocation": "pathwayInstall.ps1",
         "bakFileLocation": "tpcds.bak",
+        "scriptURL": "[uri(parameters('_artifactsLocation'), concat(variables('pathwayscriptLocation'), parameters('_artifactsLocationSasToken')))]",
         "scriptFiles": [
             "[uri(parameters('_artifactsLocation'), concat(variables('scriptLocation'), parameters('_artifactsLocationSasToken')))]",
-            "[uri(parameters('_artifactsLocation'), concat(variables('bakFileLocation'), parameters('_artifactsLocationSasToken')))]"
+            "[uri(parameters('_artifactsLocation'), concat(variables('bakFileLocation'), parameters('_artifactsLocationSasToken')))]"            
         ],
         "scriptParameters": "[concat('-userName ', parameters('sourceWindowsAdminUserName'), ' -password \"', parameters('sourceWindowsAdminPassword'))]",
         "storageAccountNamePrefix": "storage",
@@ -215,6 +217,28 @@
                         },
                         "protectedSettings": {
                             "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', './', variables('scriptLocation'), ' ', variables('scriptParameters'))]"
+                        }
+                    }
+                },
+                  {
+                    "apiVersion": "2019-12-01",
+                    "type": "extensions",
+                    "name": "CustomScriptExtension",
+                    "location": "[parameters('location')]",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Compute/virtualMachines/', variables('sourceServerName'))]",
+                        "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'SqlIaasExtension')]"
+                    ],
+                    "properties": {
+                        "publisher": "Microsoft.Compute",
+                        "type": "CustomScriptExtension",
+                        "typeHandlerVersion": "1.9",
+                        "autoUpgradeMinorVersion": true,
+                        "settings": {
+                            "fileUris": "[variables('scriptURL')]"
+                        },
+                        "protectedSettings": {
+                            "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', './', variables('pathwayscriptLocation'), ' ', variables('scriptParameters'))]"
                         }
                     }
                 }
