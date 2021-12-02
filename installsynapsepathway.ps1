@@ -96,11 +96,11 @@ function Download-Gateway([string] $url, [string] $gwPath)
         $ErrorActionPreference = "Stop";
         $client = New-Object System.Net.WebClient
         $client.DownloadFile($url, $gwPath)
-        Trace-Log "Download gateway successfully. Gateway loc: $gwPath"
+        Trace-Log "Download synapse pathway successfully. Pathway loc: $gwPath"
     }
     catch
     {
-        Trace-Log "Fail to download gateway msi"
+        Trace-Log "Fail to download pathway msi"
         Trace-Log $_.Exception.ToString()
         throw
     }
@@ -110,7 +110,7 @@ function Install-Gateway([string] $gwPath)
 {
 	if ([string]::IsNullOrEmpty($gwPath))
     {
-		Throw-Error "Gateway path is not specified"
+		Throw-Error "Pathway path is not specified"
     }
 
 	if (!(Test-Path -Path $gwPath))
@@ -119,7 +119,7 @@ function Install-Gateway([string] $gwPath)
 	}
 	
 	Trace-Log "Start Gateway installation"
-	Run-Process "msiexec.exe" "/i gateway.msi INSTALLTYPE=AzureTemplate /quiet /norestart"		
+	Run-Process "msiexec.exe" "/i AzureSynapsePathway.msi INSTALLTYPE=AzureTemplate /quiet /norestart"		
 	
 	Start-Sleep -Seconds 30	
 
