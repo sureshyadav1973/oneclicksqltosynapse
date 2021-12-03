@@ -62,6 +62,10 @@
         "scriptLocation": "adddatabase.ps1",
         "pathwayscriptLocation": "installsynapsepathway.ps1",
         "bakFileLocation": "tpcds.bak",
+        "userAssignedIdentityName": "configDeployer",
+        "roleAssignmentName": "[guid(concat(resourceGroup().id, 'contributor'))]",
+        "contributorRoleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
+        "deploymentScriptName": "CopyConfigScript",
         "scriptFiles": [
             "[uri(parameters('_artifactsLocation'), concat(variables('scriptLocation'), parameters('_artifactsLocationSasToken')))]",
             "[uri(parameters('_artifactsLocation'), concat(variables('bakFileLocation'), parameters('_artifactsLocationSasToken')))]",
@@ -245,10 +249,28 @@
                         }
                     }
                 },
+         {
+            "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+            "apiVersion": "2018-11-30",
+            "name": "[variables('userAssignedIdentityName')]",
+            "location": "[resourceGroup().location]"
+        },
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2020-10-01-preview",
+            "name": "[variables('roleAssignmentName')]",
+            "dependsOn": [ "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('userAssignedIdentityName'))]" ],
+            "properties": {
+                "roleDefinitionId": "[variables('contributorRoleDefinitionId')]",
+                "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('userAssignedIdentityName')), '2015-08-31-preview').principalId]",
+                "scope": "[resourceGroup().id]",
+                "principalType": "ServicePrincipal"
+            }
+        },
                 {
                     "type": "Microsoft.Resources/deploymentScripts",
                     "apiVersion": "2020-10-01",
-                    "name": "removescript",
+                    "name": "[variables('deploymentScriptName')]"
                     "location": "[parameters('location')]",
                     "kind": "AzureCLI",
                     "dependsOn": [
@@ -256,6 +278,12 @@
                         "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'SqlIaasExtension')]",
                         "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'CustomScriptExtension')]"
         ],
+                    "identity": {
+                "type": "UserAssigned",
+                "userAssignedIdentities": {
+                    "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities',variables('userAssignedIdentityName'))]": {}
+                }
+            },
         "properties": {
             "forceUpdateTag": "1",
             "AzCliVersion": "2.2.0",
