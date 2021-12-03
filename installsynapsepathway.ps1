@@ -208,10 +208,10 @@ function Get-InstalledFilePath()
 
 
 Trace-Log "Log file: $logLoc"
-$neturi = "https://download.visualstudio.microsoft.com/download/pr/0f71eaf1-ce85-480b-8e11-c3e2725b763a/9044bfd1c453e2215b6f9a0c224d20fe/dotnet-sdk-6.0.100-win-x64.exe"
+$neturi = "https://download.visualstudio.microsoft.com/download/pr/5303da13-69f7-407a-955a-788ec4ee269c/dc803f35ea6e4d831c849586a842b912/dotnet-sdk-5.0.403-win-x64.exe"
 $uri = "https://download.microsoft.com/download/a/0/a/a0a5ea88-ea47-4897-bb68-3e9483673523/AzureSynapsePathway.msi"
 Trace-Log "Pathway download fw link: $uri"
-$netruntimepath = "$PWD\dotnet-sdk-6.0.100-win-x64.exe"
+$netruntimepath = "$PWD\dotnet-sdk-5.0.403-win-x64.exe"
 $gwPath= "$PWD\AzureSynapsePathway.msi"
 Trace-Log "Pathway download location: $gwPath"
 
