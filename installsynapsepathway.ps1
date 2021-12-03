@@ -214,5 +214,6 @@ Download-netruntime $neturi $netruntimepath
 Install-Runtime $netruntimepath
 Install-Gateway $gwPath
 
+Remove-AzurermVMCustomScriptExtension -ResourceGroupName  $rgname -VMName $vmname -Name $extname -Force
 
 
