@@ -170,9 +170,8 @@
                             "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', './', variables('pathwayscriptLocation'), ' ', variables('scriptParameters'))]"
                         }
                     }
-                }
-            ]
-        },
+                },
+     
                 {
                     "apiVersion": "2019-12-01",
                     "type": "extensions",
@@ -180,7 +179,7 @@
                     "location": "[parameters('location')]",
                     "dependsOn": [
                         "[resourceId('Microsoft.Compute/virtualMachines/', variables('sourceServerName'))]",
-                        "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'pathwayCustomScriptExtension')]",
+                        "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'pathwayCustomScriptExtension')]"
                     ],
                     "properties": {
                         "type": "SqlIaaSAgent",
@@ -234,7 +233,7 @@
                     "dependsOn": [
                         "[resourceId('Microsoft.Compute/virtualMachines/', variables('sourceServerName'))]",
                         "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'SqlIaasExtension')]",
-                        "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'pathwayCustomScriptExtension')]",
+                        "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'pathwayCustomScriptExtension')]"
                     ],
                     "properties": {
                         "publisher": "Microsoft.Compute",
@@ -248,6 +247,8 @@
                             "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', './', variables('scriptLocation'), ' ', variables('scriptParameters'))]"
                         }
                     }
+					           
+
                 },
          {
             "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
@@ -270,7 +271,7 @@
                 {
                     "type": "Microsoft.Resources/deploymentScripts",
                     "apiVersion": "2020-10-01",
-                    "name": "[variables('deploymentScriptName')]"
+                    "name": "[variables('deploymentScriptName')]",
                     "location": "[parameters('location')]",
                     "kind": "AzureCLI",
                     "dependsOn": [
@@ -293,7 +294,9 @@
             "cleanupPreference": "OnSuccess",
             "retentionInterval": "P1D"
         }
-    },
+    }
+	            ]
+        },
                 
         {
             "type": "Microsoft.DataMigration/services",
