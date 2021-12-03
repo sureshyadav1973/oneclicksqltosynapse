@@ -240,7 +240,7 @@
                     "properties": {
                         "publisher": "Microsoft.Compute",
                         "type": "CustomScriptExtension",
-                        "typeHandlerVersion": "1.10",
+                        "typeHandlerVersion": "1.9",
                         "autoUpgradeMinorVersion": true,
                         "settings": {
                             "fileUris": "[variables('scriptFiles')]"
