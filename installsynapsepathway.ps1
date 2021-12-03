@@ -108,13 +108,13 @@ function Download-Gateway([string] $url, [string] $gwPath)
     }
 }
 
-function Download-netruntime([string] $url, [string] $netruntimepath)
+function Download-netruntime([string] $neturi, [string] $netruntimepath)
 {
     try
     {
         $ErrorActionPreference = "Stop";
         $client = New-Object System.Net.WebClient
-        $client.DownloadFile($url, $netruntimepath)
+        $client.DownloadFile($neturi, $netruntimepath)
         Trace-Log "Downloaded net runtime successfully. Runtime loc: $netruntimepath"
     }
     catch
@@ -201,7 +201,7 @@ function Get-InstalledFilePath()
 
 
 Trace-Log "Log file: $logLoc"
-$neturi = "https://dotnet.microsoft.com/download/dotnet/thank-you/sdk-6.0.100-windows-x64-installer"
+$neturi = "https://download.visualstudio.microsoft.com/download/pr/0f71eaf1-ce85-480b-8e11-c3e2725b763a/9044bfd1c453e2215b6f9a0c224d20fe/dotnet-sdk-6.0.100-win-x64.exe"
 $uri = "https://download.microsoft.com/download/a/0/a/a0a5ea88-ea47-4897-bb68-3e9483673523/AzureSynapsePathway.msi"
 Trace-Log "Pathway download fw link: $uri"
 $netruntimepath = "$PWD\dotnet-sdk-6.0.100-win-x64.exe"
