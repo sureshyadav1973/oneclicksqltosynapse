@@ -108,6 +108,23 @@ function Download-Gateway([string] $url, [string] $gwPath)
     }
 }
 
+function Download-netruntime([string] $url, [string] $netruntimepath)
+{
+    try
+    {
+        $ErrorActionPreference = "Stop";
+        $client = New-Object System.Net.WebClient
+        $client.DownloadFile($url, $netruntimepath)
+        Trace-Log "Downloaded net runtime successfully. Runtime loc: $netruntimepath"
+    }
+    catch
+    {
+        Trace-Log "Fail to download runtime desktop"
+        Trace-Log $_.Exception.ToString()
+        throw
+    }
+}
+
 function Install-Gateway([string] $gwPath)
 {
 	if ([string]::IsNullOrEmpty($gwPath))
@@ -127,6 +144,28 @@ function Install-Gateway([string] $gwPath)
 
 	Trace-Log "Installation of gateway is successful"
 }
+
+function Install-Runtime([string] $netruntimepath)
+{
+	if ([string]::IsNullOrEmpty($netruntimepath))
+    {
+		Throw-Error "Runtime path is not specified"
+    }
+
+	if (!(Test-Path -Path $gwPath))
+	{
+		Throw-Error "Invalid runtime path: $netruntimepath"
+	}
+	
+	Trace-Log "Start Gateway installation"
+	Start-Process $netruntimepath -ArgumentList "/q" -Wait
+	
+	
+	Start-Sleep -Seconds 30	
+
+	Trace-Log "Installation of runtime is successful"
+}
+
 
 function Get-RegistryProperty([string] $keyPath, [string] $property)
 {
@@ -162,13 +201,18 @@ function Get-InstalledFilePath()
 
 
 Trace-Log "Log file: $logLoc"
+$neturi = "https://dotnet.microsoft.com/download/dotnet/thank-you/sdk-6.0.100-windows-x64-installer"
 $uri = "https://download.microsoft.com/download/a/0/a/a0a5ea88-ea47-4897-bb68-3e9483673523/AzureSynapsePathway.msi"
 Trace-Log "Pathway download fw link: $uri"
+$netruntimepath = "$PWD\dotnet-sdk-6.0.100-win-x64.exe"
 $gwPath= "$PWD\AzureSynapsePathway.msi"
 Trace-Log "Pathway download location: $gwPath"
 
 
 Download-Gateway $uri $gwPath
+Download-netruntime $neturi $netruntimepath
+Install-Runtime $netruntimepath
 Install-Gateway $gwPath
+
 
 
