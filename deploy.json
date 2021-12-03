@@ -150,27 +150,7 @@
                 }
             },
             "resources": [
-                  {
-                    "apiVersion": "2019-12-01",
-                    "type": "extensions",
-                    "name": "pathwayCustomScriptExtension",
-                    "location": "[parameters('location')]",
-                    "dependsOn": [
-                        "[resourceId('Microsoft.Compute/virtualMachines/', variables('sourceServerName'))]"
-                                           ],
-                    "properties": {
-                        "publisher": "Microsoft.Compute",
-                        "type": "CustomScriptExtension",
-                        "typeHandlerVersion": "1.9",
-                        "autoUpgradeMinorVersion": true,
-                        "settings": {
-                            "fileUris": "[variables('scriptFiles')]"
-                        },
-                        "protectedSettings": {
-                            "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', './', variables('pathwayscriptLocation'), ' ', variables('scriptParameters'))]"
-                        }
-                    }
-                },
+                 
      
                 {
                     "apiVersion": "2019-12-01",
@@ -225,6 +205,28 @@
                         }
                     }
                 },
+		     {
+                    "apiVersion": "2019-12-01",
+                    "type": "extensions",
+                    "name": "pathwayCustomScriptExtension",
+                    "location": "[parameters('location')]",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Compute/virtualMachines/', variables('sourceServerName'))]",
+			    "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'SqlIaasExtension')]"
+                                           ],
+                    "properties": {
+                        "publisher": "Microsoft.Compute",
+                        "type": "CustomScriptExtension",
+                        "typeHandlerVersion": "1.9",
+                        "autoUpgradeMinorVersion": true,
+                        "settings": {
+                            "fileUris": "[variables('scriptFiles')]"
+                        },
+                        "protectedSettings": {
+                            "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', './', variables('pathwayscriptLocation'), ' ', variables('scriptParameters'))]"
+                        }
+                    }
+                },
                 {
                     "apiVersion": "2019-12-01",
                     "type": "extensions",
@@ -261,7 +263,7 @@
         },
         {
             "type": "Microsoft.Authorization/roleAssignments",
-            "apiVersion": "2020-10-01-preview",
+            "apiVersion": "2021-04-01-preview",
             "name": "[variables('roleAssignmentName')]",
             "dependsOn": [ "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('userAssignedIdentityName'))]",
 			 "[resourceId('Microsoft.Compute/virtualMachines/', variables('sourceServerName'))]"],
