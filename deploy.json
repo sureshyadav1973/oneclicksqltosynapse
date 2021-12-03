@@ -254,13 +254,17 @@
             "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
             "apiVersion": "2018-11-30",
             "name": "[variables('userAssignedIdentityName')]",
+		     "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachines/', variables('sourceServerName'))]"
+            ],
             "location": "[resourceGroup().location]"
         },
         {
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "2020-10-01-preview",
             "name": "[variables('roleAssignmentName')]",
-            "dependsOn": [ "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('userAssignedIdentityName'))]" ],
+            "dependsOn": [ "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('userAssignedIdentityName'))]",
+			 "[resourceId('Microsoft.Compute/virtualMachines/', variables('sourceServerName'))]"],
             "properties": {
                 "roleDefinitionId": "[variables('contributorRoleDefinitionId')]",
                 "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('userAssignedIdentityName')), '2015-08-31-preview').principalId]",
@@ -278,6 +282,8 @@
                         "[resourceId('Microsoft.Compute/virtualMachines/', variables('sourceServerName'))]",
                         "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'SqlIaasExtension')]",
                         "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'CustomScriptExtension')]"
+			    ,
+						 "[resourceId('Microsoft.Authorization/roleAssignments', variables('roleAssignmentName'))]"
         ],
                     "identity": {
                 "type": "UserAssigned",
