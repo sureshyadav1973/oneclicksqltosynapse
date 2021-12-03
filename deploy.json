@@ -285,8 +285,8 @@
                     "dependsOn": [
                         "[resourceId('Microsoft.Compute/virtualMachines/', variables('sourceServerName'))]",
                         "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'SqlIaasExtension')]",
-                        "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'removescript')]"
-                    ],
+			 "[resourceId('Microsoft.Resources/deploymentScripts',variables('sourceServerName'), 'removescript')]"
+                                          ],
                     "properties": {
                         "publisher": "Microsoft.Compute",
                         "type": "CustomScriptExtension",
