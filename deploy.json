@@ -251,7 +251,7 @@
                 {
                     "type": "Microsoft.Resources/deploymentScripts",
                     "apiVersion": "2020-10-01",
-                    "name": "[variables('deploymentScriptName')]",
+                    "name": "removescript",
                     "location": "[parameters('location')]",
                     "kind": "AzureCLI",
                     "dependsOn": [
@@ -285,7 +285,7 @@
                     "dependsOn": [
                         "[resourceId('Microsoft.Compute/virtualMachines/', variables('sourceServerName'))]",
                         "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'SqlIaasExtension')]",
-                        "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), variables('deploymentScriptName'))]"
+                        "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'removescript')]"
                     ],
                     "properties": {
                         "publisher": "Microsoft.Compute",
