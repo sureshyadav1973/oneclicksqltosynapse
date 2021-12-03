@@ -158,8 +158,7 @@
                     "name": "SqlIaasExtension",
                     "location": "[parameters('location')]",
                     "dependsOn": [
-                        "[resourceId('Microsoft.Compute/virtualMachines/', variables('sourceServerName'))]",
-                        "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'pathwayCustomScriptExtension')]"
+                        "[resourceId('Microsoft.Compute/virtualMachines/', variables('sourceServerName'))]"
                     ],
                     "properties": {
                         "type": "SqlIaaSAgent",
