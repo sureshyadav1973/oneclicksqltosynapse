@@ -63,7 +63,7 @@
         "pathwayscriptLocation": "installsynapsepathway.ps1",
         "bakFileLocation": "tpcds.bak",
         "userAssignedIdentityName": "configDeployer",
-        "roleAssignmentName": "[guid(concat(resourceGroup().id, 'contributor'))]",
+        "roleAssignmentName": "[guid(concat(resourceGroup().id, 'owner'))]",
         "contributorRoleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
         "deploymentScriptName": "CopyConfigScript",
         "scriptFiles": [
