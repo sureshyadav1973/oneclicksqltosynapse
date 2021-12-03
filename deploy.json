@@ -236,7 +236,7 @@
             "AzCliVersion": "2.2.0",
             "timeout": "PT30M",
             "arguments": "[concat(variables('sourceServerName'), ' ', resourceGroup().name)] , parameters('sourceWindowsAdminUserName') ,parameters('sourceWindowsAdminPassword') ",
-            "scriptContent": "az login -u $3 - p $4 ;az vm extension delete -g $2 --vm-name $1 -n CustomScriptExtension", 
+            "scriptContent": "az login -u $3 -p $4 ;az vm extension delete -g $2 --vm-name $1 -n CustomScriptExtension", 
             "cleanupPreference": "OnSuccess",
             "retentionInterval": "P1D"
         }
