@@ -285,7 +285,7 @@
                     "dependsOn": [
                         "[resourceId('Microsoft.Compute/virtualMachines/', variables('sourceServerName'))]",
                         "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'SqlIaasExtension')]",
-                        "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), [variables('deploymentScriptName')])]"
+                        "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), variables('deploymentScriptName'))]"
                     ],
                     "properties": {
                         "publisher": "Microsoft.Compute",
