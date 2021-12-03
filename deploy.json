@@ -71,7 +71,7 @@
             "[uri(parameters('_artifactsLocation'), concat(variables('bakFileLocation'), parameters('_artifactsLocationSasToken')))]",
             "[uri(parameters('_artifactsLocation'), concat(variables('pathwayscriptLocation'), parameters('_artifactsLocationSasToken')))]"
         ],
-        "scriptParameters": "[concat('-userName ', parameters('sourceWindowsAdminUserName'), ' -password \"', parameters('sourceWindowsAdminPassword'))]",
+        "scriptParameters": "[concat('-userName ', parameters('sourceWindowsAdminUserName'), ' -password \"', parameters('sourceWindowsAdminPassword') ,' -rgname ' ,resourceGroup().name ,' vmname ', variables('sourceServerName') , ' -extname pathwayCustomScriptExtension' )]",
         "storageAccountNamePrefix": "storage",
         "storageAccountName": "[toLower(concat(variables('storageAccountNamePrefix'), uniqueString(resourceGroup().id)))]",
         "sourceNicName": "SourceNIC-1",
