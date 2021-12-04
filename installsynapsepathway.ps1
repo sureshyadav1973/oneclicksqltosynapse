@@ -3,14 +3,7 @@ param(
     $userName,
 	
 	[string]
-	$password ,
-	 [string]
-          $rgname,
-	
-	[string]
-	$vmname ,
-	[string]
-	$extname 
+	$password 
 )
 # init log setting
 $logLoc = "$env:SystemDrive\WindowsAzure\Logs\Plugins\Microsoft.Compute.CustomScriptExtension\"
