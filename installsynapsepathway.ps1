@@ -222,7 +222,7 @@ Install-Runtime $netruntimepath
 Install-Gateway $gwPath
 
 
-#addeddatabaseinstall
+# addeddatabaseinstall
 
 if ((Get-Command Install-PackageProvider -ErrorAction Ignore) -eq $null)
 {
@@ -277,4 +277,5 @@ Restore-SqlDatabase `
 	-RelocateFile $relocateFiles `
 	-Credential $credentials; 
 
-
+Trace-Log "Log file: $logLoc"
+Trace-Log "Database Imported"
