@@ -311,6 +311,7 @@ function GenerateDBScript([string]$serverName, [string]$dbname, [string]$scriptp
   #=============
   # Tables
   #=============
+  Trace-Log "Generating table list"
   $options.FileName = $scriptpath + "\$($dbname)_tables.sql"
   New-Item $options.FileName -type file -force | Out-Null
   Foreach ($tb in $db.Tables)
