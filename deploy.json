@@ -61,7 +61,7 @@
         "sourceServerName": "[take(concat('Source', uniqueString(resourceGroup().id)), 15)]",
         "scriptLocation": "adddatabase.ps1",
         "pathwayscriptLocation": "installsynapsepathway.ps1",
-	"exportddlscript": "exportddl.ps1",
+	"exportddlscriptlocation": "exportddl.ps1",
         "bakFileLocation": "tpcds.bak",
         "userAssignedIdentityName": "configDeployer",
         "roleAssignmentName": "[guid(concat(resourceGroup().id, 'owner'))]",
@@ -70,7 +70,8 @@
         "scriptFiles": [
             "[uri(parameters('_artifactsLocation'), concat(variables('scriptLocation'), parameters('_artifactsLocationSasToken')))]",
             "[uri(parameters('_artifactsLocation'), concat(variables('bakFileLocation'), parameters('_artifactsLocationSasToken')))]",
-            "[uri(parameters('_artifactsLocation'), concat(variables('pathwayscriptLocation'), parameters('_artifactsLocationSasToken')))]"
+            "[uri(parameters('_artifactsLocation'), concat(variables('pathwayscriptLocation'), parameters('_artifactsLocationSasToken')))]",
+	"[uri(parameters('_artifactsLocation'), concat(variables('exportddlscriptlocation'), parameters('_artifactsLocationSasToken')))]"
         ],
         "scriptParameters": "[concat('-userName ', parameters('sourceWindowsAdminUserName'), ' -password \"', parameters('sourceWindowsAdminPassword'))]",
         "storageAccountNamePrefix": "storage",
