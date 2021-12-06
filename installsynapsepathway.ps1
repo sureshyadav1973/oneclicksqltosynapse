@@ -399,4 +399,4 @@ function GenerateDBScript([string]$serverName, [string]$dbname, [string]$scriptp
 #=============
 # Execute
 #=============
-GenerateDBScript "localhost" "sampledatabase"
+GenerateDBScript "localhost" "SampleDatabase"
