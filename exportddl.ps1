@@ -1,5 +1,14 @@
 # Usage:  powershell ExportSchema.ps1 "SERVERNAME" "DATABASE" "C:\<YourOutputPath>"
-
+param(
+    [string]
+    $servername,
+	
+	[string]
+	$dbname,
+  
+  	[string]
+	$filepath
+)
 
 # Start Script
 Set-ExecutionPolicy RemoteSigned
@@ -36,7 +45,7 @@ function GenerateDBScript([string]$serverName, [string]$dbname, [string]$scriptp
   #=============
   # Tables
   #=============
-  $options.FileName = $scriptpath + "\$($dbname)_tables.sql"
+  $options.FileName = $scriptpath + "\tables\$($dbname)_tables.sql"
   New-Item $options.FileName -type file -force | Out-Null
   Foreach ($tb in $db.Tables)
   {
@@ -51,7 +60,7 @@ function GenerateDBScript([string]$serverName, [string]$dbname, [string]$scriptp
   #=============
   # Views
   #=============
-  $options.FileName = $scriptpath + "\$($dbname)_views.sql"
+  $options.FileName = $scriptpath + "\views\$($dbname)_views.sql"
   New-Item $options.FileName -type file -force | Out-Null
   $views = $db.Views | where {$_.IsSystemObject -eq $false}
   Foreach ($view in $views)
@@ -66,7 +75,7 @@ function GenerateDBScript([string]$serverName, [string]$dbname, [string]$scriptp
   # StoredProcedures
   #=============
   $StoredProcedures = $db.StoredProcedures | where {$_.IsSystemObject -eq $false}
-  $options.FileName = $scriptpath + "\$($dbname)_stored_procs.sql"
+  $options.FileName = $scriptpath + "\sp\$($dbname)_stored_procs.sql"
   New-Item $options.FileName -type file -force | Out-Null
   Foreach ($StoredProcedure in $StoredProcedures)
   {
@@ -80,7 +89,7 @@ function GenerateDBScript([string]$serverName, [string]$dbname, [string]$scriptp
   # Functions
   #=============
   $UserDefinedFunctions = $db.UserDefinedFunctions | where {$_.IsSystemObject -eq $false}
-  $options.FileName = $scriptpath + "\$($dbname)_functions.sql"
+  $options.FileName = $scriptpath + "\udf\$($dbname)_functions.sql"
   New-Item $options.FileName -type file -force | Out-Null
   Foreach ($function in $UserDefinedFunctions)
   {
@@ -94,7 +103,7 @@ function GenerateDBScript([string]$serverName, [string]$dbname, [string]$scriptp
   # DBTriggers
   #=============
   $DBTriggers = $db.Triggers
-  $options.FileName = $scriptpath + "\$($dbname)_db_triggers.sql"
+  $options.FileName = $scriptpath + "\dbtriggers\$($dbname)_db_triggers.sql"
   New-Item $options.FileName -type file -force | Out-Null
   foreach ($trigger in $db.triggers)
   {
@@ -107,7 +116,7 @@ function GenerateDBScript([string]$serverName, [string]$dbname, [string]$scriptp
   #=============
   # Table Triggers
   #=============
-  $options.FileName = $scriptpath + "\$($dbname)_table_triggers.sql"
+  $options.FileName = $scriptpath + "\tabletriggers\$($dbname)_table_triggers.sql"
   New-Item $options.FileName -type file -force | Out-Null
   Foreach ($tb in $db.Tables)
   {     
@@ -124,4 +133,4 @@ function GenerateDBScript([string]$serverName, [string]$dbname, [string]$scriptp
 #=============
 # Execute
 #=============
-GenerateDBScript $args[0] $args[1] $args[2]
+GenerateDBScript $server $dbname $filepath
