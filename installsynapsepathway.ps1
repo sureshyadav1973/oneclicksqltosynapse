@@ -197,7 +197,8 @@ function Get-InstalledFilePath()
 	return $filePath
 }
 
-
+# addeddatabaseinstall
+./adddatabase.ps1 $username $password
 
 
 Trace-Log "Log file: $logLoc"
@@ -216,8 +217,7 @@ Download-netruntime $neturi $netruntimepath
 Install-Runtime $netruntimepath
 Install-Gateway $gwPath
 
-# addeddatabaseinstall
-./adddatabase.ps1 $username $password
+
 
 # Generateddl
 ./exportddl.ps1 "localhost" "sampledatabase"
