@@ -134,4 +134,4 @@ function GenerateDBScript([string]$serverName, [string]$dbname, [string]$scriptp
 #=============
 # Execute
 #=============
-GenerateDBScript $server $dbname $filepath
+GenerateDBScript $servername $dbname $filepath
