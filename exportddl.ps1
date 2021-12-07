@@ -20,6 +20,7 @@ function GenerateDBScript([string]$serverName, [string]$dbname, [string]$scriptp
   [System.Reflection.Assembly]::LoadWithPartialName("Microsoft.SqlServer.SMO") | Out-Null
   [System.Reflection.Assembly]::LoadWithPartialName("System.Data") | Out-Null
   $srv = new-object "Microsoft.SqlServer.Management.SMO.Server" $serverName
+  $srv.ConnectionContext.LoginSecure=$false
   $srv.SetDefaultInitFields([Microsoft.SqlServer.Management.SMO.View], "IsSystemObject")
   $db = New-Object "Microsoft.SqlServer.Management.SMO.Database"
   $db = $srv.Databases[$dbname]
