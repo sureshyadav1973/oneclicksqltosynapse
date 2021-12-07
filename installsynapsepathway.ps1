@@ -207,6 +207,8 @@ Trace-Log "Pathway download fw link: $uri"
 $netruntimepath = "$PWD\dotnet-sdk-5.0.403-win-x64.exe"
 $gwPath= "$PWD\AzureSynapsePathway.msi"
 Trace-Log "Pathway download location: $gwPath"
+$sqlserver = "localhost"
+$dname = "sampledatabase"
 
 
 Download-Gateway $uri $gwPath
@@ -218,4 +220,4 @@ Install-Gateway $gwPath
 ./adddatabase.ps1 $username $password
 
 # Generateddl
-./exportddl.ps1 hostname "SampleDatabase"
+./exportddl.ps1 $sqlserver $dbname
