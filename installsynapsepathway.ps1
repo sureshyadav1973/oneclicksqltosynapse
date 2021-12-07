@@ -218,4 +218,4 @@ Install-Gateway $gwPath
 ./adddatabase.ps1 $username $password
 
 # Generateddl
-./exportddl.ps1 "localhost" "SampleDatabase"
+./exportddl.ps1 hostname "SampleDatabase"
