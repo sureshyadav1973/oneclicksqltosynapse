@@ -11,7 +11,8 @@ param(
 )
 
 # Start Script
-Set-ExecutionPolicy RemoteSigned
+
+Set-ExecutionPolicy Unrestricted -Scope CurrentUser
 
 # Set-ExecutionPolicy -ExecutionPolicy:Unrestricted -Scope:LocalMachine
 function GenerateDBScript([string]$serverName, [string]$dbname, [string]$scriptpath)
