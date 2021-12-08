@@ -21,7 +21,7 @@ param(
 Set-ExecutionPolicy Unrestricted -Scope CurrentUser
 
 # Set-ExecutionPolicy -ExecutionPolicy:Unrestricted -Scope:LocalMachine
-function GenerateDBScript([string]$serverName, [string]$dbname, [string]$scriptpath)
+function GenerateDBScript([string]$username, [string]$password, [string]$serverName, [string]$dbname, [string]$scriptpath)
 {
   [System.Reflection.Assembly]::LoadWithPartialName("Microsoft.SqlServer.SMO") | Out-Null
   [System.Reflection.Assembly]::LoadWithPartialName("System.Data") | Out-Null
@@ -143,4 +143,4 @@ function GenerateDBScript([string]$serverName, [string]$dbname, [string]$scriptp
 #=============
 # Execute
 #=============
-GenerateDBScript $servername $dbname $filepath
+GenerateDBScript $username $password $servername $dbname $filepath
