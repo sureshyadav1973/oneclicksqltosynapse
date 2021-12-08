@@ -1,6 +1,12 @@
 # Usage:  powershell ExportSchema.ps1 "SERVERNAME" "DATABASE" "C:\<YourOutputPath>"
 param(
     [string]
+    $username,
+	
+	[string]
+	$password,
+	
+    [string]
     $servername,
 	
 	[string]
@@ -20,7 +26,9 @@ function GenerateDBScript([string]$serverName, [string]$dbname, [string]$scriptp
   [System.Reflection.Assembly]::LoadWithPartialName("Microsoft.SqlServer.SMO") | Out-Null
   [System.Reflection.Assembly]::LoadWithPartialName("System.Data") | Out-Null
   $srv = new-object "Microsoft.SqlServer.Management.SMO.Server" $serverName
-  $srv.ConnectionContext.LoginSecure=$true
+  $srv.ConnectionContext.LoginSecure=$false
+  $srv.ConnectionContext.set_Login($username)
+  $srv.ConnectionContext.set_Password($password) 
   $srv.SetDefaultInitFields([Microsoft.SqlServer.Management.SMO.View], "IsSystemObject")
   $db = New-Object "Microsoft.SqlServer.Management.SMO.Database"
   $db = $srv.Databases[$dbname]
