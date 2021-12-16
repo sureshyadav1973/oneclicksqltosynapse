@@ -210,6 +210,8 @@ $gwPath= "$PWD\AzureSynapsePathway.msi"
 Trace-Log "Pathway download location: $gwPath"
 $sqlserver = "localhost"
 $dname = "sampledatabase"
+$extractpath="c:\ddlexport"
+$ddltranstablepath="c:\ddlexport\tables\output"
 
 
 Download-Gateway $uri $gwPath
@@ -220,9 +222,9 @@ Install-Gateway $gwPath
 
 
 # Generateddl
-./exportddl.ps1 $username $password "localhost" "sampledatabase"
+./exportddl.ps1 $username $password "localhost" "sampledatabase" $extractpath
 
 # Convert  DDL using Pathway - 
-./converttablesddl.ps1
+./converttablesddl.ps1 $ddltranstablepath
 
 
