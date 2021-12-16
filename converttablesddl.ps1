@@ -1,2 +1,11 @@
-
-C:\Program Files (x86)\Azure Synapse Pathway\aspcmd -i C:\ddlexport\tables -o C:\ddlexport\tables\output
+param(
+ 
+  	[string]
+	$infilepath ,
+  
+  	[string]
+	$outfilepath 
+  
+)
+cd "C:\Program Files (x86)\Azure Synapse Pathway"
+./aspcmd -i $infilepath -o $outfilepath
