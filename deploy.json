@@ -63,6 +63,7 @@
         "pathwayscriptLocation": "installsynapsepathway.ps1",
 	"exportddlscriptlocation": "exportddl.ps1",
         "bakFileLocation": "tpcds.bak",
+	"conversionscriptlocation": "converttablesddl.ps1",
         "userAssignedIdentityName": "configDeployer",
         "roleAssignmentName": "[guid(concat(resourceGroup().id, 'owner'))]",
         "contributorRoleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
@@ -71,7 +72,8 @@
             "[uri(parameters('_artifactsLocation'), concat(variables('scriptLocation'), parameters('_artifactsLocationSasToken')))]",
             "[uri(parameters('_artifactsLocation'), concat(variables('bakFileLocation'), parameters('_artifactsLocationSasToken')))]",
             "[uri(parameters('_artifactsLocation'), concat(variables('pathwayscriptLocation'), parameters('_artifactsLocationSasToken')))]",
-	"[uri(parameters('_artifactsLocation'), concat(variables('exportddlscriptlocation'), parameters('_artifactsLocationSasToken')))]"
+	"[uri(parameters('_artifactsLocation'), concat(variables('exportddlscriptlocation'), parameters('_artifactsLocationSasToken')))]",
+	    "[uri(parameters('_artifactsLocation'), concat(variables('conversionscriptlocation'), parameters('_artifactsLocationSasToken')))]"
         ],
         "scriptParameters": "[concat('-userName ', parameters('sourceWindowsAdminUserName'), ' -password \"', parameters('sourceWindowsAdminPassword'))]",
         "storageAccountNamePrefix": "storage",
