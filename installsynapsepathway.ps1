@@ -211,6 +211,7 @@ Trace-Log "Pathway download location: $gwPath"
 $sqlserver = "localhost"
 $dname = "sampledatabase"
 $extractpath="c:\ddlexport"
+$ddltablepath="c:\ddlexport\tables"
 $ddltranstablepath="c:\ddlexport\tables\output"
 
 
@@ -225,6 +226,6 @@ Install-Gateway $gwPath
 ./exportddl.ps1 $username $password "localhost" "sampledatabase" $extractpath
 
 # Convert  DDL using Pathway - 
-./converttablesddl.ps1 $ddltranstablepath
+./converttablesddl.ps1 $ddltablepath="c:\ddlexport\tables" $ddltranstablepath
 
 
