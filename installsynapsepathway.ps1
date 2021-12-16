@@ -221,3 +221,8 @@ Install-Gateway $gwPath
 
 # Generateddl
 ./exportddl.ps1 $username $password "localhost" "sampledatabase"
+
+# Convert  DDL using Pathway - 
+./converttablesddl.ps1
+
+
