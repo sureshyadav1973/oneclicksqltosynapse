@@ -473,7 +473,7 @@
                 "tier": "Standard"
             },
             "kind": "StorageV2",
-            "name": "[variables('storageAccountName')]",
+            "name": "[parameters('storageAccountName')]",
             "apiVersion": "2019-06-01",
             "location": "[parameters('location')]",
             "properties": {
@@ -495,16 +495,7 @@
                 }
             }
         },
-		 {
-      "type": "Microsoft.Storage/storageAccounts",
-      "apiVersion": "2021-04-01",
-      "name": "[parameters('storageAccountName')]",
-      "location": "[parameters('location')]",
-      "sku": {
-        "name": "Standard_LRS"
-      },
-      "kind": "StorageV2"
-    },
+		 
     {
       "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
       "apiVersion": "2021-04-01",
@@ -644,3 +635,5 @@
 
     ]
 }
+
+
