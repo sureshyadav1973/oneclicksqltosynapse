@@ -226,6 +226,6 @@ Install-Gateway $gwPath
 ./exportddl.ps1 $username $password "localhost" "sampledatabase" $extractpath
 
 # Convert  DDL using Pathway - 
-./converttablesddl.ps1 $ddltablepath="c:\ddlexport\tables" $ddltranstablepath
+./converttablesddl.ps1 $ddltablepath $ddltranstablepath
 
 
