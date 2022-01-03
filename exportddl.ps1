@@ -55,7 +55,7 @@ function GenerateDBScript([string]$username, [string]$password, [string]$serverN
   #=============
   # Tables
   #=============
-  $options.FileName = $scriptpath + "\ddlexport\tables\$($dbname)_tables.sql"
+  $options.FileName = $scriptpath + "\tables\$($dbname)_tables.sql"
   New-Item $options.FileName -type file -force | Out-Null
   Foreach ($tb in $db.Tables)
   {
@@ -70,7 +70,7 @@ function GenerateDBScript([string]$username, [string]$password, [string]$serverN
   #=============
   # Views
   #=============
-  $options.FileName = $scriptpath + "\ddlexport\views\$($dbname)_views.sql"
+  $options.FileName = $scriptpath + "\views\$($dbname)_views.sql"
   New-Item $options.FileName -type file -force | Out-Null
   $views = $db.Views | where {$_.IsSystemObject -eq $false}
   Foreach ($view in $views)
@@ -85,7 +85,7 @@ function GenerateDBScript([string]$username, [string]$password, [string]$serverN
   # StoredProcedures
   #=============
   $StoredProcedures = $db.StoredProcedures | where {$_.IsSystemObject -eq $false}
-  $options.FileName = $scriptpath + "\ddlexport\sp\$($dbname)_stored_procs.sql"
+  $options.FileName = $scriptpath + "\sp\$($dbname)_stored_procs.sql"
   New-Item $options.FileName -type file -force | Out-Null
   Foreach ($StoredProcedure in $StoredProcedures)
   {
@@ -99,7 +99,7 @@ function GenerateDBScript([string]$username, [string]$password, [string]$serverN
   # Functions
   #=============
   $UserDefinedFunctions = $db.UserDefinedFunctions | where {$_.IsSystemObject -eq $false}
-  $options.FileName = $scriptpath + "\ddlexport\udf\$($dbname)_functions.sql"
+  $options.FileName = $scriptpath + "\udf\$($dbname)_functions.sql"
   New-Item $options.FileName -type file -force | Out-Null
   Foreach ($function in $UserDefinedFunctions)
   {
@@ -113,7 +113,7 @@ function GenerateDBScript([string]$username, [string]$password, [string]$serverN
   # DBTriggers
   #=============
   $DBTriggers = $db.Triggers
-  $options.FileName = $scriptpath + "\ddlexport\dbtriggers\$($dbname)_db_triggers.sql"
+  $options.FileName = $scriptpath + "\dbtriggers\$($dbname)_db_triggers.sql"
   New-Item $options.FileName -type file -force | Out-Null
   foreach ($trigger in $db.triggers)
   {
@@ -126,7 +126,7 @@ function GenerateDBScript([string]$username, [string]$password, [string]$serverN
   #=============
   # Table Triggers
   #=============
-  $options.FileName = $scriptpath + "\ddlexport\tabletriggers\$($dbname)_table_triggers.sql"
+  $options.FileName = $scriptpath + "\tabletriggers\$($dbname)_table_triggers.sql"
   New-Item $options.FileName -type file -force | Out-Null
   Foreach ($tb in $db.Tables)
   {     
