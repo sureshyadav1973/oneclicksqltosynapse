@@ -54,14 +54,15 @@
                 "description": "The sasToken required to access _artifactsLocation.  When the template is deployed using the accompanying scripts, a sasToken will be automatically generated. Use the defaultValue if the staging location is not secured."
             },
             "defaultValue": ""
-        }
-	    "dataFactoryName": {
+        },
+		 "dataFactoryName": {
       "type": "string",
       "defaultValue": "[format('datafactory{0}', uniqueString(resourceGroup().id))]",
       "metadata": {
         "description": "Data Factory Name"
-      },
-	"storageAccountName": {
+      }
+    },
+	 "storageAccountName": {
       "type": "string",
       "defaultValue": "[format('storage{0}', uniqueString(resourceGroup().id))]",
       "metadata": {
@@ -75,7 +76,7 @@
         "description": "Name of the blob container in the Azure Storage account."
       }
     }
-       },
+    },
     "variables": {
         "DMSServiceName": "[concat('DMS', uniqueString(resourceGroup().id))]",
         "sourceServerName": "[take(concat('Source', uniqueString(resourceGroup().id)), 15)]",
@@ -105,12 +106,12 @@
         "defaultSubnetName": "default",
         "databaseName": "TargetDatabaseName1",
         "publicIpAddressId": {
-            "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPSourceServer'))]" ,
-		 "dataFactoryLinkedServiceName": "ArmtemplateStorageLinkedService",
+            "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPSourceServer'))]"
+        },
+		"dataFactoryLinkedServiceName": "ArmtemplateStorageLinkedService",
     "dataFactoryDataSetInName": "ArmtemplateTestDatasetIn",
     "dataFactoryDataSetOutName": "ArmtemplateTestDatasetOut",
     "pipelineName": "ArmtemplateSampleCopyPipeline"
-        }
     },
     "resources": [
         {
@@ -493,8 +494,8 @@
                     "keySource": "Microsoft.Storage"
                 }
             }
-        }
-	        {
+        },
+		 {
       "type": "Microsoft.Storage/storageAccounts",
       "apiVersion": "2021-04-01",
       "name": "[parameters('storageAccountName')]",
@@ -638,5 +639,8 @@
         "[resourceId('Microsoft.DataFactory/factories/datasets', parameters('dataFactoryName'), variables('dataFactoryDataSetOutName'))]"
       ]
     }
+
+
+
     ]
 }
