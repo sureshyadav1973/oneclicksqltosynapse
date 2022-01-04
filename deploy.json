@@ -663,7 +663,7 @@
             "value": "[parameters('dataFactoryName')]"
           },
           "existingDataFactoryVersion": {
-            "value": "[parameters('existingDataFactoryVersion')]"
+            "value": "V2"
           },
           "IntegrationRuntimeName": {
             "value": "[parameters('IntegrationRuntimeName')]"
