@@ -75,6 +75,13 @@
       "metadata": {
         "description": "Name of the blob container in the Azure Storage account."
       }
+    },
+    "IntegrationRuntimeName": {
+      "type": "string",
+	    "defaultValue": "[format('IR{0}', uniqueString(resourceGroup().id))]",
+      "metadata": {
+        "description": "IR name must be unique in subscription"
+      }
     }
     },
     "variables": {
@@ -86,6 +93,7 @@
         "bakFileLocation": "tpcds.bak",
 	"conversionscriptlocation": "converttablesddl.ps1",
         "userAssignedIdentityName": "configDeployer",
+	"IRtemplateLink": "[uri(parameters('_artifactsLocation'), concat('IRtemplate.json', parameters('_artifactsLocationSasToken')))]",
         "roleAssignmentName": "[guid(concat(resourceGroup().id, 'owner'))]",
         "contributorRoleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
         "deploymentScriptName": "CopyConfigScript",
