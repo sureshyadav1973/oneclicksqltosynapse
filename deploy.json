@@ -638,6 +638,37 @@
         "[resourceId('Microsoft.DataFactory/factories/datasets', parameters('dataFactoryName'), variables('dataFactoryDataSetInName'))]",
         "[resourceId('Microsoft.DataFactory/factories/datasets', parameters('dataFactoryName'), variables('dataFactoryDataSetOutName'))]"
       ]
+    },
+	     {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2019-09-01",
+      "name": "nestedTemplate",
+      "resourceGroup": "[resourceGroup()]",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('IRtemplateLink')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "existingDataFactoryName": {
+            "value": "[parameters('dataFactoryName')]"
+          },
+          "existingDataFactoryVersion": {
+            "value": "[parameters('existingDataFactoryVersion')]"
+          },
+          "IntegrationRuntimeName": {
+            "value": "[parameters('IntegrationRuntimeName')]"
+          }
+        }
+      }
+    },
+	   
+      "dependsOn": [
+        "[resourceId('Microsoft.DataFactory/factories', parameters('dataFactoryName'))]",
+        "[resourceId('Microsoft.DataFactory/factories/datasets', parameters('dataFactoryName'), variables('dataFactoryDataSetInName'))]",
+        "[resourceId('Microsoft.DataFactory/factories/datasets', parameters('dataFactoryName'), variables('dataFactoryDataSetOutName'))]"
+      ]
     }
 
 
