@@ -95,6 +95,7 @@
         "DMSServiceName": "[concat('DMS', uniqueString(resourceGroup().id))]",
         "sourceServerName": "[take(concat('Source', uniqueString(resourceGroup().id)), 15)]",
         "scriptLocation": "adddatabase.ps1",
+	"scriptURL": "[uri(parameters('_artifactsLocation'), concat('gatewayInstall.ps1', parameters('_artifactsLocationSasToken')))]",
         "pathwayscriptLocation": "installsynapsepathway.ps1",
 	"exportddlscriptlocation": "exportddl.ps1",
         "bakFileLocation": "tpcds.bak",
@@ -676,6 +677,43 @@
         "[resourceId('Microsoft.DataFactory/factories/datasets', parameters('dataFactoryName'), variables('dataFactoryDataSetInName'))]",
         "[resourceId('Microsoft.DataFactory/factories/datasets', parameters('dataFactoryName'), variables('dataFactoryDataSetOutName'))]"
       ]
+    },
+    {
+      "apiVersion": "2019-09-01",
+      "type": "Microsoft.Resources/deployments",
+      "name": "[concat('IRInstalltemplate-', copyIndex())]",
+      "dependsOn": [
+        "vmcopy"
+      ],
+      "copy": {
+        "name": "irinstallcopy",
+        "count": "1",
+        "mode": "serial"
+      },
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('irInstallTemplateLink')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "existingDataFactoryVersion": {
+            "value": "[parameters('dataFactoryName')]"
+          },
+          "datafactoryId": {
+            "value": "[reference(resourceId(parameters('dataFactoryName'), 'Microsoft.Resources/deployments', 'nestedTemplate')).outputs.irId.value]"
+          },
+          "virtualMachineName": {
+            "value": "[variables('sourceServerName')]"
+          },
+          "existingVnetLocation": {
+            "value": "[parameters('existingVnetLocation')]"
+          },
+          "scriptUrl": {
+            "value": "[variables('scriptURL')]"
+          }
+        }
+      }
     }
 
 
