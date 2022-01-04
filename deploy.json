@@ -680,13 +680,7 @@
       "apiVersion": "2019-09-01",
       "type": "Microsoft.Resources/deployments",
       "name": "IRInstalltemplate-test",
-	     "dependsOn":
-      [
-        "[resourceId('Microsoft.DataFactory/factories', parameters('dataFactoryName'))]",
-        "[resourceId('Microsoft.DataFactory/factories/datasets', parameters('dataFactoryName'), variables('dataFactoryDataSetInName'))]",
-        "[resourceId('Microsoft.DataFactory/factories/datasets', parameters('dataFactoryName'), variables('dataFactoryDataSetOutName'))]"
-      ],
-     
+	       
       "properties": {
         "mode": "Incremental",
         "templateLink": {
