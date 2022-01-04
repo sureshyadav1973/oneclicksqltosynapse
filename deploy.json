@@ -94,6 +94,7 @@
 	"conversionscriptlocation": "converttablesddl.ps1",
         "userAssignedIdentityName": "configDeployer",
 	"IRtemplateLink": "[uri(parameters('_artifactsLocation'), concat('IRtemplate.json', parameters('_artifactsLocationSasToken')))]",
+	"irInstallTemplateLink": "[uri(parameters('_artifactsLocation'), concat('IRInstall.json', parameters('_artifactsLocationSasToken')))]",
         "roleAssignmentName": "[guid(concat(resourceGroup().id, 'owner'))]",
         "contributorRoleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
         "deploymentScriptName": "CopyConfigScript",
