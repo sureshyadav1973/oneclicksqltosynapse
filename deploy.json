@@ -688,11 +688,7 @@
         "[resourceId('Microsoft.DataFactory/factories/datasets', parameters('dataFactoryName'), variables('dataFactoryDataSetInName'))]",
         "[resourceId('Microsoft.DataFactory/factories/datasets', parameters('dataFactoryName'), variables('dataFactoryDataSetOutName'))]"
       ],
-      "copy": {
-        "name": "irinstallcopy",
-        "count": "1",
-        "mode": "serial"
-      },
+     
       "properties": {
         "mode": "Incremental",
         "templateLink": {
