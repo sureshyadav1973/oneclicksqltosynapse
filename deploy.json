@@ -127,8 +127,7 @@
 		"dataFactoryLinkedServiceName": "ArmtemplateStorageLinkedService",
     "dataFactoryDataSetInName": "ArmtemplateTestDatasetIn",
     "dataFactoryDataSetOutName": "ArmtemplateTestDatasetOut",
-    "pipelineName": "ArmtemplateSampleCopyPipeline",
-	"gatewayId": "[resourceId(resourceGroup(), 'Microsoft.DataFactory/dataFactories/gateways', parameters('dataFactoryName'), parameters('GatewayName'))]"
+    "pipelineName": "ArmtemplateSampleCopyPipeline"
         },
     "resources": [
         {
