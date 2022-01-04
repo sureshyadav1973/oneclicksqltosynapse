@@ -651,7 +651,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-09-01",
       "name": "nestedTemplate",
-      "resourceGroup": "[resourceGroup().id]",
+      "resourceGroup": "[resourceGroup().name]",
       "properties": {
         "mode": "Incremental",
         "templateLink": {
