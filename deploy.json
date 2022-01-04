@@ -128,9 +128,8 @@
 		"dataFactoryLinkedServiceName": "ArmtemplateStorageLinkedService",
     "dataFactoryDataSetInName": "ArmtemplateTestDatasetIn",
     "dataFactoryDataSetOutName": "ArmtemplateTestDatasetOut",
-    "pipelineName": "ArmtemplateSampleCopyPipeline",
-	"gatewayId": "[resourceId('Microsoft.DataFactory/dataFactories/gateways', parameters('dataFactoryName'), parameters('GatewayName'))]"
-        },
+    "pipelineName": "ArmtemplateSampleCopyPipeline"
+	 },
     "resources": [
         {
             "type": "Microsoft.Compute/virtualMachines",
@@ -669,8 +668,7 @@
             "value": "[parameters('IntegrationRuntimeName')]"
           }
         }
-      },
-   
+      }, 
 	   
       "dependsOn": [
         "[resourceId('Microsoft.DataFactory/factories', parameters('dataFactoryName'))]",
