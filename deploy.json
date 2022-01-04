@@ -82,7 +82,13 @@
       "metadata": {
         "description": "IR name must be unique in subscription"
       }
-    }
+    } ,
+    "GatewayName": {
+      "type": "string",
+	      "defaultValue": "[format('Gateway{0}', uniqueString(resourceGroup().id))]",
+      "metadata": {
+        "description": "Gateway name must be unique in subscription"
+      }
     },
     "variables": {
         "DMSServiceName": "[concat('DMS', uniqueString(resourceGroup().id))]",
@@ -120,7 +126,8 @@
 		"dataFactoryLinkedServiceName": "ArmtemplateStorageLinkedService",
     "dataFactoryDataSetInName": "ArmtemplateTestDatasetIn",
     "dataFactoryDataSetOutName": "ArmtemplateTestDatasetOut",
-    "pipelineName": "ArmtemplateSampleCopyPipeline"
+    "pipelineName": "ArmtemplateSampleCopyPipeline",
+    "gatewayId": "[resourceId(resourceGroup(), 'Microsoft.DataFactory/dataFactories/gateways', parameters('dataFactoryName'), parameters('GatewayName'))]"
     },
     "resources": [
         {
