@@ -695,7 +695,7 @@
             "value": "[parameters('dataFactoryName')]"
           },
           "datafactoryId": {
-            "value": "[reference('Microsoft.Resources/deployments', 'nestedTemplate')).outputs.irId.value]"
+           "value": "[reference(resourceId('Microsoft.Resources/deployments', 'nestedTemplate')).outputs.irId.value]"
           },
           "virtualMachineName": {
             "value": "[variables('sourceServerName')]"
