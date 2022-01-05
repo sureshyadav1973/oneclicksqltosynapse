@@ -685,7 +685,8 @@
 	       "dependsOn": [
         "[resourceId('Microsoft.DataFactory/factories', parameters('dataFactoryName'))]",
         "[resourceId('Microsoft.DataFactory/factories/datasets', parameters('dataFactoryName'), variables('dataFactoryDataSetInName'))]",
-        "[resourceId('Microsoft.DataFactory/factories/datasets', parameters('dataFactoryName'), variables('dataFactoryDataSetOutName'))]"
+        "[resourceId('Microsoft.DataFactory/factories/datasets', parameters('dataFactoryName'), variables('dataFactoryDataSetOutName'))]",
+        "[resourceId('Microsoft.DataFactory/factories/integrationruntimes', parameters('dataFactoryName'), parameters('IntegrationRuntimeName'))]"
       ],
       "properties": {
         "mode": "Incremental",
