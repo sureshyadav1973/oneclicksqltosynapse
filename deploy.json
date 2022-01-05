@@ -683,6 +683,7 @@
       "type": "Microsoft.Resources/deployments",
       "name": "IRInstalltemplate-test",
 	       "dependsOn": [
+		       "[resourceId('Microsoft.Resources/deployments', 'nestedTemplate')]",
         "[resourceId('Microsoft.DataFactory/factories', parameters('dataFactoryName'))]",
         "[resourceId('Microsoft.DataFactory/factories/datasets', parameters('dataFactoryName'), variables('dataFactoryDataSetInName'))]",
         "[resourceId('Microsoft.DataFactory/factories/datasets', parameters('dataFactoryName'), variables('dataFactoryDataSetOutName'))]"
