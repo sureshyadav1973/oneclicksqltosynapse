@@ -57,7 +57,7 @@
         },
 		 "dataFactoryName": {
       "type": "string",
-      "defaultValue": "[format('datafactory{0}', uniqueString(resourceGroup().id))]",
+      "defaultValue": "[format('dfinstance{0}', uniqueString(resourceGroup().id))]",
       "metadata": {
         "description": "Data Factory Name"
       }
