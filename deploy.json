@@ -706,11 +706,7 @@
             "value": "[variables('scriptURL')]"
           }
         }
-      },
-	 "dependsOn":
-      [
-        "[resourceId('Microsoft.Resources/deployments', 'nestedTemplate')]"
-      ]
+      }
     }
 
 
