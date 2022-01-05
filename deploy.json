@@ -682,11 +682,7 @@
       "apiVersion": "2019-09-01",
       "type": "Microsoft.Resources/deployments",
       "name": "IRInstalltemplate-test",
-	     "dependsOn":
-      [
-        "[resourceId('Microsoft.Resources/deployments', 'nestedTemplate')]"
-      ],
-     
+	        
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -710,7 +706,11 @@
             "value": "[variables('scriptURL')]"
           }
         }
-      }
+      },
+	 "dependsOn":
+      [
+        "[resourceId('Microsoft.Resources/deployments', 'nestedTemplate')]"
+      ]
     }
 
 
