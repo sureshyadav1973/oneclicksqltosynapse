@@ -686,6 +686,7 @@
       "type": "Microsoft.Resources/deployments",
       "name": "IRInstalltemplate-test",
 	       "dependsOn": [
+		        "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'pathwayCustomScriptExtension')]",
 		       "[resourceId('Microsoft.Resources/deployments', 'nestedTemplate')]",
         "[resourceId('Microsoft.DataFactory/factories', parameters('dataFactoryName'))]",
         "[resourceId('Microsoft.DataFactory/factories/datasets', parameters('dataFactoryName'), variables('dataFactoryDataSetInName'))]",
@@ -711,7 +712,7 @@
             "value": "[parameters('location')]"  
           },
           "scriptUrl": {
-            "value": "[variables('scriptFiles')]"
+            "value": "[variables('scriptURL')]"
           }
         }
       }
