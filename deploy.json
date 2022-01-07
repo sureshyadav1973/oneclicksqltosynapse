@@ -112,7 +112,8 @@
             "[uri(parameters('_artifactsLocation'), concat(variables('bakFileLocation'), parameters('_artifactsLocationSasToken')))]",
             "[uri(parameters('_artifactsLocation'), concat(variables('pathwayscriptLocation'), parameters('_artifactsLocationSasToken')))]",
 	"[uri(parameters('_artifactsLocation'), concat(variables('exportddlscriptlocation'), parameters('_artifactsLocationSasToken')))]",
-	    "[uri(parameters('_artifactsLocation'), concat(variables('conversionscriptlocation'), parameters('_artifactsLocationSasToken')))]"
+	    "[uri(parameters('_artifactsLocation'), concat(variables('conversionscriptlocation'), parameters('_artifactsLocationSasToken')))]",
+		 "[uri(parameters('_artifactsLocation'), concat(variables('gatewayscriptlocation'), parameters('_artifactsLocationSasToken')))]"
         ],
         "scriptParameters": "[concat('-userName ', parameters('sourceWindowsAdminUserName'), ' -password \"', parameters('sourceWindowsAdminPassword'))]",
         "storageAccountNamePrefix": "storage",
@@ -710,7 +711,7 @@
             "value": "[parameters('location')]"  
           },
           "scriptUrl": {
-            "value": "[variables('scriptURL')]"
+            "value": "[variables('scriptFiles')]"
           }
         }
       }
