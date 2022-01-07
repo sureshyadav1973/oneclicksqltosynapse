@@ -706,7 +706,7 @@
             "value": "[variables('sourceServerName')]"
           },
           "existingVnetLocation": {
-            "value": "[variables('adVNet')]"
+            "value": "[parameters('location')]"  
           },
           "scriptUrl": {
             "value": "[variables('scriptURL')]"
