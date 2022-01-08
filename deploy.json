@@ -98,7 +98,7 @@
         "pathwayscriptLocation": "installsynapsepathway.ps1",
 	"exportddlscriptlocation": "exportddl.ps1",
         "bakFileLocation": "tpcds.bak",
-	"gatewayscriptlocation": "gatewayInstall.ps1",
+	"gatewayscriptlocation": "gatewayinstall.ps1",
 	"conversionscriptlocation": "converttablesddl.ps1",
         "userAssignedIdentityName": "configDeployer",
 	"scriptURL": "[uri(parameters('_artifactsLocation'), concat(variables('gatewayscriptlocation'), parameters('_artifactsLocationSasToken')))]", 
