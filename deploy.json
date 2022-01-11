@@ -664,6 +664,7 @@
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(variables('sourceServerName'), '/' ,variables('sourceServerName'), 'installGW')]",
       "apiVersion": "2019-07-01",
+	     "location": "[parameters('location')]",
       "tags": {
         "vmname": "[variables('sourceServerName')]"
       },
