@@ -685,7 +685,7 @@
           "[resourceId('Microsoft.DataFactory/factories/integrationruntimes', parameters('dataFactoryName'), parameters('IntegrationRuntimeName'))]"
       ]
     }
-
+ 
     ]
 }
  
