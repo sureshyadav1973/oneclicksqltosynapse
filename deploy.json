@@ -130,7 +130,8 @@
 		"dataFactoryLinkedServiceName": "ArmtemplateStorageLinkedService",
     "dataFactoryDataSetInName": "ArmtemplateTestDatasetIn",
     "dataFactoryDataSetOutName": "ArmtemplateTestDatasetOut",
-    "pipelineName": "ArmtemplateSampleCopyPipeline"
+    "pipelineName": "ArmtemplateSampleCopyPipeline",
+	"pipelineName":    [reference(resourceId('Microsoft.Resources/deployments', 'nestedTemplate')).outputs.irId.value]
         },
     "resources": [
         {
@@ -650,71 +651,38 @@
       ]
     },
 	     {
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2019-09-01",
-      "name": "nestedTemplate",
+      "type": "Microsoft.DataFactory/factories/integrationruntimes",
+      "apiVersion": "2018-06-01",
+      "name": "[concat(parameters('dataFactoryName'), '/', parameters('IntegrationRuntimeName'))]",
       "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[variables('IRtemplateLink')]",
-          "contentVersion": "1.0.0.0"
+        "type": "SelfHosted",
+        "description": "Self-hosted Integration runtime created using ARM template"
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(variables('sourceServerName'), '/' ,variables('sourceServerName'), 'installGW')]",
+      "apiVersion": "2019-07-01",
+      "tags": {
+        "vmname": "[variables('sourceServerName')]"
+      },
+      "properties": {
+        "publisher": "Microsoft.Compute",
+        "type": "CustomScriptExtension",
+        "typeHandlerVersion": "1.7",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "fileUris": [
+            "[parameters('scriptURL')]"
+          ]
         },
-        "parameters": {
-          "existingDataFactoryName": {
-            "value": "[parameters('dataFactoryName')]"
-          },
-          "existingDataFactoryVersion": {
-            "value": "V2"
-          },
-          "IntegrationRuntimeName": {
-            "value": "[parameters('IntegrationRuntimeName')]"
-          }
+        "protectedSettings": {
+          "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File gatewayInstall.ps1 ', listAuthKeys(resourceId('Microsoft.DataFactory/factories/integrationruntimes', parameters('dataFactoryName'), parameters('IntegrationRuntimeName')), '2017-09-01-preview').authKey1)]"
         }
       },
-   
-	   
-      "dependsOn": [
-        "[resourceId('Microsoft.DataFactory/factories', parameters('dataFactoryName'))]",
-        "[resourceId('Microsoft.DataFactory/factories/datasets', parameters('dataFactoryName'), variables('dataFactoryDataSetInName'))]",
-        "[resourceId('Microsoft.DataFactory/factories/datasets', parameters('dataFactoryName'), variables('dataFactoryDataSetOutName'))]"
+      "dependsOn":[
+          "[resourceId('Microsoft.DataFactory/factories/integrationruntimes', parameters('dataFactoryName'), parameters('IntegrationRuntimeName'))]"
       ]
-    },
-	    
-	    
-{
-      "apiVersion": "2019-09-01",
-      "type": "Microsoft.Resources/deployments",
-      "name": "IRInstalltemplate-test",
-	       "dependsOn": [
-		       		       "[resourceId('Microsoft.Resources/deployments', 'nestedTemplate')]",
-        "[resourceId('Microsoft.DataFactory/factories', parameters('dataFactoryName'))]",
-        "[resourceId('Microsoft.DataFactory/factories/datasets', parameters('dataFactoryName'), variables('dataFactoryDataSetInName'))]",
-        "[resourceId('Microsoft.DataFactory/factories/datasets', parameters('dataFactoryName'), variables('dataFactoryDataSetOutName'))]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[variables('irInstallTemplateLink')]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "existingDataFactoryVersion": {
-            "value": "V2"
-          },
-          "datafactoryId": {
-           "value": "[reference(resourceId('Microsoft.Resources/deployments', 'nestedTemplate')).outputs.irId.value]"
-          },
-          "virtualMachineName": {
-            "value": "[variables('sourceServerName')]"
-          },
-          "existingVnetLocation": {
-            "value": "[parameters('location')]"  
-          },
-          "scriptUrl": {
-            "value": "[variables('scriptURL')]"
-          }
-        }
-      }
     }
 
     ]
