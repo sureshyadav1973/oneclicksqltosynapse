@@ -274,7 +274,7 @@
                             "fileUris": "[variables('scriptFiles')]"
                         },
                         "protectedSettings": {
-                            "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', './', variables('mainscript), ' ', listAuthKeys(resourceId('Microsoft.DataFactory/factories/integrationruntimes', parameters('dataFactoryName'), parameters('IntegrationRuntimeName')), '2017-09-01-preview').authKey1, ' ' , parameters('sourceWindowsAdminUserName'),' ' ,parameters('sourceWindowsAdminPassword'))]"
+                            "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', './', variables('mainscript'), ' ', listAuthKeys(resourceId('Microsoft.DataFactory/factories/integrationruntimes', parameters('dataFactoryName'), parameters('IntegrationRuntimeName')), '2017-09-01-preview').authKey1, ' ' , parameters('sourceWindowsAdminUserName'),' ' ,parameters('sourceWindowsAdminPassword'))]"
                         }
                     }
                 }
