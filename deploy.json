@@ -684,7 +684,8 @@
         }
       },
       "dependsOn":[
-          "[resourceId('Microsoft.DataFactory/factories/integrationruntimes', parameters('dataFactoryName'), parameters('IntegrationRuntimeName'))]"
+          "[resourceId('Microsoft.DataFactory/factories/integrationruntimes', parameters('dataFactoryName'), parameters('IntegrationRuntimeName'))]",
+	       "[resourceId('Microsoft.Compute/virtualMachines/', variables('sourceServerName'))]"
       ]
     }
  
