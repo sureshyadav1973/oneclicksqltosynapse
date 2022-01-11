@@ -252,8 +252,15 @@
                             "SQLAuthUpdateUserName": "[parameters('sourceWindowsAdminUserName')]",
                             "SQLAuthUpdatePassword": "[parameters('sourceSqlAuthenticationPassword')]"
                         }
-                    }
-                },
+					}
+			
+			
+                }
+
+		  
+           
+	            ]
+        },
 		    
                 
         {
@@ -665,7 +672,11 @@
 	         "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'SqlIaasExtension')]"
       ]
     }
- 
-    ]
-}
+		
+ ]
+		
+		}
+
+
+
  
