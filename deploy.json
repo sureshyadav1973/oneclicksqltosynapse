@@ -663,7 +663,7 @@
           ]
         },
         "protectedSettings": {
-          "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File main.ps1 ', listAuthKeys(resourceId('Microsoft.DataFactory/factories/integrationruntimes', parameters('dataFactoryName'), parameters('IntegrationRuntimeName')), '2017-09-01-preview').authKey1) , ' ', variables('scriptParameters')]"
+          "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File main.ps1 ', listAuthKeys(resourceId('Microsoft.DataFactory/factories/integrationruntimes', parameters('dataFactoryName'), parameters('IntegrationRuntimeName')), '2017-09-01-preview').authKey1) , ' ', variables('scriptParameters'))]"
         }
       },
       "dependsOn":[
