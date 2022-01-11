@@ -652,7 +652,7 @@
 	     {
       "type": "Microsoft.DataFactory/factories/integrationruntimes",
       "apiVersion": "2018-06-01",
-      "name": "[parameters('IntegrationRuntimeName')]",
+      "name":  "[concat(parameters('existingDataFactoryName'), '/', parameters('IntegrationRuntimeName'))]",
       "properties": {
         "type": "SelfHosted",
         "description": "Self-hosted Integration runtime created using ARM template"
