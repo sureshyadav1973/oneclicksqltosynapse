@@ -1,7 +1,7 @@
 
 param(
 [String]
-gatewayid,
+ $gatewayKey,
 
     [string]
     $userName,
