@@ -674,7 +674,7 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
-            "[parameters('scriptURL')]"
+            "[variables('scriptFiles')]"
           ]
         },
         "protectedSettings": {
