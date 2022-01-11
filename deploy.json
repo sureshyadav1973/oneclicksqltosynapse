@@ -130,8 +130,7 @@
 		"dataFactoryLinkedServiceName": "ArmtemplateStorageLinkedService",
     "dataFactoryDataSetInName": "ArmtemplateTestDatasetIn",
     "dataFactoryDataSetOutName": "ArmtemplateTestDatasetOut",
-    "pipelineName": "ArmtemplateSampleCopyPipeline",
-	"pipelineName":    [reference(resourceId('Microsoft.Resources/deployments', 'nestedTemplate')).outputs.irId.value]
+    "pipelineName": "ArmtemplateSampleCopyPipeline"
         },
     "resources": [
         {
