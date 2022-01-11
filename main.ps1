@@ -10,6 +10,8 @@ param(
 	$password 
 )
 
-./gatewayinstall.ps1 $gatewaykwy
+./installsynapsepathway.ps1 $userName $password
 
-./installsynapsepathway.ps1 $username $password
+./gatewayinstall.ps1 $gatewayKey
+
+
