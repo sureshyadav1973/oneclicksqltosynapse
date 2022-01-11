@@ -656,7 +656,9 @@
       "properties": {
         "type": "SelfHosted",
         "description": "Self-hosted Integration runtime created using ARM template"
-      }
+      },
+		     "dependsOn": [
+        "[resourceId('Microsoft.DataFactory/factories', parameters('dataFactoryName'))]" ]
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
