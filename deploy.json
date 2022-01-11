@@ -671,6 +671,7 @@
       "properties": {
         "publisher": "Microsoft.Compute",
         "type": "CustomScriptExtension",
+	      "location": "[parameters('location')]",
         "typeHandlerVersion": "1.7",
         "autoUpgradeMinorVersion": true,
         "settings": {
