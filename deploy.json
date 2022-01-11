@@ -255,7 +255,30 @@
 					}
 			
 			
+                },
+		      {
+                    "apiVersion": "2019-12-01",
+                    "type": "extensions",
+                    "name": "pathwayCustomScriptExtension",
+                    "location": "[parameters('location')]",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Compute/virtualMachines/', variables('sourceServerName'))]",
+			    "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'SqlIaasExtension')]"
+                                           ],
+                    "properties": {
+                        "publisher": "Microsoft.Compute",
+                        "type": "CustomScriptExtension",
+                        "typeHandlerVersion": "1.9",
+                        "autoUpgradeMinorVersion": true,
+                        "settings": {
+                            "fileUris": "[variables('scriptFiles')]"
+                        },
+                        "protectedSettings": {
+                            "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', './', variables('pathwayscriptLocation'), ' ', variables('scriptParameters'))]"
+                        }
+                    }
                 }
+		  
 
 		  
            
@@ -643,35 +666,8 @@
       },
 		     "dependsOn": [
         "[resourceId('Microsoft.DataFactory/factories', parameters('dataFactoryName'))]" ]
-    },
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(variables('sourceServerName'), '/' ,variables('sourceServerName'), 'installGW')]",
-      "apiVersion": "2019-07-01",
-	     "location": "[parameters('location')]",
-      "tags": {
-        "vmname": "[variables('sourceServerName')]"
-      },
-      "properties": {
-        "publisher": "Microsoft.Compute",
-        "type": "CustomScriptExtension",
-	        "typeHandlerVersion": "1.7",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "fileUris": [
-            "[variables('scriptFiles')]"
-          ]
-        },
-        "protectedSettings": {
-          "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File ', './', variables('gatewayscriptlocation') , ' ' , listAuthKeys(resourceId('Microsoft.DataFactory/factories/integrationruntimes', parameters('dataFactoryName'), parameters('IntegrationRuntimeName')), '2017-09-01-preview').authKey1)]"
-        }
-      },
-      "dependsOn":[
-          "[resourceId('Microsoft.DataFactory/factories/integrationruntimes', parameters('dataFactoryName'), parameters('IntegrationRuntimeName'))]",
-	       "[resourceId('Microsoft.Compute/virtualMachines/', variables('sourceServerName'))]",
-	         "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'SqlIaasExtension')]"
-      ]
     }
+	    
 		
  ]
 		
