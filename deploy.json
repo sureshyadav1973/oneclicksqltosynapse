@@ -92,14 +92,14 @@
 	},
 	     "SynapsewsName": {
       "type": "string",
-	      "defaultValue": "[format('Synapsews{0}', uniqueString(resourceGroup().id,deployment().name))]",
+	      "defaultValue": "[format('synapsews{0}', uniqueString(resourceGroup().id)]",
       "metadata": {
         "description": "Synapse Workspace name must be unique in subscription"
       }
 	},
 	    "SynapsedlsFsName": {
       "type": "string",
-	      "defaultValue": "[format('SynapsedlsFS{0}', uniqueString(resourceGroup().id))]",
+	      "defaultValue": "[format('synapsedlsfs{0}', uniqueString(resourceGroup().id))]",
       "metadata": {
         "description": "Synapse FileSystem name must be unique in subscription"
       }
