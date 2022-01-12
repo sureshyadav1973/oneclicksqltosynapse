@@ -701,12 +701,11 @@
             },
       "resources": [
         {
-          "condition": "[equals(parameters('allowAllConnections'),'true')]",
-          "type": "firewallrules",
+           "type": "firewallrules",
           "apiVersion": "2019-06-01-preview",
           "name": "allowAll",
-          "location": "[variables('location')]",
-          "dependsOn": [ "[variables('SynapsewsName')]" ],
+          "location": "[parameters('location')]",
+          "dependsOn": [ "[parameters('SynapsewsName')]" ],
           "properties": {
             "startIpAddress": "0.0.0.0",
             "endIpAddress": "255.255.255.255"
@@ -716,8 +715,8 @@
           "type": "firewallrules",
           "apiVersion": "2019-06-01-preview",
           "name": "AllowAllWindowsAzureIps",
-          "location": "[variables('location')]",
-          "dependsOn": [ "[variables('SynapsewsName')]" ],
+          "location": "[parameters('location')]",
+          "dependsOn": [ "[parameters('SynapsewsName')]" ],
           "properties": {
             "startIpAddress": "0.0.0.0",
             "endIpAddress": "0.0.0.0"
@@ -727,8 +726,8 @@
           "type": "managedIdentitySqlControlSettings",
           "apiVersion": "2019-06-01-preview",
           "name": "default",
-          "location": "[variables('location')]",
-          "dependsOn": [ "[variables('SynapsewsName')]" ],
+          "location": "[parameters('location')]",
+          "dependsOn": [ "[parameters('SynapsewsName')]" ],
           "properties": {
             "grantSqlControlToManagedIdentity": {
               "desiredState": "Enabled"
