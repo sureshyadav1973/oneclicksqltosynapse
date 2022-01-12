@@ -92,7 +92,7 @@
 	},
 	     "SynapsewsName": {
       "type": "string",
-	      "defaultValue": "[format('Synapseworkspace{0}', uniqueString(resourceGroup().id))]",
+	      "defaultValue": "[format('Synapsews{0}', uniqueString(resourceGroup().id))]",
       "metadata": {
         "description": "Synapse Workspace name must be unique in subscription"
       }
