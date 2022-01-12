@@ -89,7 +89,22 @@
       "metadata": {
         "description": "Gateway name must be unique in subscription"
       }
+	},
+	     "SynapsewsName": {
+      "type": "string",
+	      "defaultValue": "[format('Synapsews{0}', uniqueString(resourceGroup().id))]",
+      "metadata": {
+        "description": "Synapse Workspace name must be unique in subscription"
+      }
+	},
+	    "SynapsedlsFsName": {
+      "type": "string",
+	      "defaultValue": "[format('SynapsedlsFS{0}', uniqueString(resourceGroup().id))]",
+      "metadata": {
+        "description": "Synapse FileSystem name must be unique in subscription"
+      }
 	}
+	  
     },
     "variables": {
         "DMSServiceName": "[concat('DMS', uniqueString(resourceGroup().id))]",
@@ -133,6 +148,7 @@
     "dataFactoryDataSetInName": "ArmtemplateTestDatasetIn",
     "dataFactoryDataSetOutName": "ArmtemplateTestDatasetOut",
     "pipelineName": "ArmtemplateSampleCopyPipeline"
+    
         },
     "resources": [
         {
@@ -666,11 +682,66 @@
       },
 		     "dependsOn": [
         "[resourceId('Microsoft.DataFactory/factories', parameters('dataFactoryName'))]" ]
+    },
+	      {
+            "apiVersion": "2019-06-01-preview",
+            "name": "[parameters('SynapsewsName')]",
+            "location": "[parameters('location')]",
+            "type": "Microsoft.Synapse/workspaces",
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "defaultDataLakeStorage": {
+                    "accountUrl": "[reference(parameters('storageAccountName')).primaryEndpoints.dfs]",
+                    "filesystem": "[parameters('SynapsedlsFsName')]"
+                },
+                "sqlAdministratorLogin": "[parameters('sourceWindowsAdminUserName')]",
+                "sqlAdministratorLoginPassword": "[parameters('sourceSqlAuthenticationPassword')]"
+            },
+      "resources": [
+        {
+          "condition": "[equals(parameters('allowAllConnections'),'true')]",
+          "type": "firewallrules",
+          "apiVersion": "2019-06-01-preview",
+          "name": "allowAll",
+          "location": "[variables('location')]",
+          "dependsOn": [ "[variables('SynapsewsName')]" ],
+          "properties": {
+            "startIpAddress": "0.0.0.0",
+            "endIpAddress": "255.255.255.255"
+          }
+        },
+        {
+          "type": "firewallrules",
+          "apiVersion": "2019-06-01-preview",
+          "name": "AllowAllWindowsAzureIps",
+          "location": "[variables('location')]",
+          "dependsOn": [ "[variables('SynapsewsName')]" ],
+          "properties": {
+            "startIpAddress": "0.0.0.0",
+            "endIpAddress": "0.0.0.0"
+          }
+        },
+        {
+          "type": "managedIdentitySqlControlSettings",
+          "apiVersion": "2019-06-01-preview",
+          "name": "default",
+          "location": "[variables('location')]",
+          "dependsOn": [ "[variables('SynapsewsName')]" ],
+          "properties": {
+            "grantSqlControlToManagedIdentity": {
+              "desiredState": "Enabled"
+            }
+          }
+        }
+      ]
     }
+	
 	    
-		
+	    
  ]
-		
+}
 		}
 
 
