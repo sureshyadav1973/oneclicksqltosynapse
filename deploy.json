@@ -97,6 +97,13 @@
         "description": "Synapse Workspace name must be unique in subscription"
       }
 	},
+	      "SynapseStorageName": {
+      "type": "string",
+	      "defaultValue": "[format('synapsestorage{0}', uniqueString(resourceGroup().id))]",
+      "metadata": {
+        "description": "Synapse storage name must be unique in subscription"
+      }
+	},
 	    "SynapsedlsFsName": {
       "type": "string",
 	      "defaultValue": "[format('synapsedlsfs{0}', uniqueString(resourceGroup().id))]",
@@ -683,7 +690,35 @@
 		     "dependsOn": [
         "[resourceId('Microsoft.DataFactory/factories', parameters('dataFactoryName'))]" ]
     },
-	      {
+	  {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2019-06-01",
+      "name": "[parameters('SynapseStorageName')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Standard_LRS"
+      },
+      "kind": "StorageV2",
+      "properties": {
+        "accessTier": "Hot",
+        "supportsHttpsTrafficOnly": true,
+        "isHnsEnabled": true
+      },
+      "resources": [
+        {
+          "name": "[concat('default/', parameters('SynapsedlsFsName'))]",
+          "type": "blobServices/containers",
+          "apiVersion": "2019-06-01",
+          "dependsOn": [
+            "[parameters('SynapseStorageName')]"
+          ],
+          "properties": {
+            "publicAccess": "None"
+          }
+        }
+      ]
+    },
+	    {
             "apiVersion": "2019-06-01-preview",
             "name": "[parameters('SynapsewsName')]",
             "location": "[parameters('location')]",
@@ -693,7 +728,7 @@
             },
             "properties": {
                 "defaultDataLakeStorage": {
-                    "accountUrl": "[reference(parameters('storageAccountName')).primaryEndpoints.dfs]",
+                    "accountUrl": "[reference(parameters('SynapseStorageName')).primaryEndpoints.dfs]",
                     "filesystem": "[parameters('SynapsedlsFsName')]"
                 },
                 "sqlAdministratorLogin": "[parameters('sourceWindowsAdminUserName')]",
