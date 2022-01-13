@@ -99,14 +99,14 @@
 	},
 	      "SynapseStorageName": {
       "type": "string",
-	      "defaultValue": "[format('synapsestorage{0}', uniqueString(resourceGroup().id))]",
+	      "defaultValue": "[format('ss{0}', uniqueString(resourceGroup().id))]",
       "metadata": {
         "description": "Synapse storage name must be unique in subscription"
       }
 	},
 	    "SynapsedlsFsName": {
       "type": "string",
-	      "defaultValue": "[format('synapsedlsfs{0}', uniqueString(resourceGroup().id))]",
+	      "defaultValue": "[format('sfs{0}', uniqueString(resourceGroup().id))]",
       "metadata": {
         "description": "Synapse FileSystem name must be unique in subscription"
       }
