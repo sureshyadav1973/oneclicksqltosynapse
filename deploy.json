@@ -782,27 +782,7 @@
       },
 		     "dependsOn": [
         "[resourceId('Microsoft.Synapse/workspaces', parameters('SynapsewsName'))]" ]
-    }	    ,
-	    {
-    "name": "FileServer1",
-    "type": "Microsoft.Synapse/workspaces/linkedservices",
-          "apiVersion": "2021-06-01",
-    "properties": {
-            "type": "FileServer",
-        "typeProperties": {
-            "host": "c:\\",
-            "userId": "sureshsqladmin",
-            "encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI1Y2E0ODM1OC02MWI0LTQxM2EtOTc4ZS0zYzBmZWRiZmJjNWMiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
-        },
-        "connectVia": {
-            "referenceName":  "[concat(parameters('SynapsewsName'), '/', parameters('IntegrationRuntimeName'))]",
-            "type": "IntegrationRuntimeReference"
-        }
-	    ,
-		     "dependsOn": [
-        "[resourceId('Microsoft.Synapse/workspaces/integrationRuntimes',[concat(parameters('SynapsewsName'), '/', parameters('IntegrationRuntimeName'))]]" ]
-    }
-}
+    }	   
 	    
 	    
  ]
