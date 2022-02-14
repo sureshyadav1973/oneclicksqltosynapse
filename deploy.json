@@ -786,6 +786,7 @@
 	    {
     "name": "FileServer1",
     "type": "Microsoft.Synapse/workspaces/linkedservices",
+		     "apiVersion": "2021-06-01",
     "properties": {
         "annotations": [],
         "type": "FileServer",
