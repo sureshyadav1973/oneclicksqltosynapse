@@ -852,7 +852,24 @@
         "properties": {
           "value": "[variables('VMSecretValue')]"
         }
-      }
+      },
+	    {
+	"name": "keyVaultLinkedservice",
+       "type": "Microsoft.Synapse/workspaces/linkedservices",
+          "apiVersion": "2018-06-01",
+	"properties": {
+		"parameters": {
+			"keyVaultName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "@{concat('https://',linkedService().keyVaultName,'.vault.azure.net/')}"
+		}
+	}
+}
 	    
 	    
  ]
