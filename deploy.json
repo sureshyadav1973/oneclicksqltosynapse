@@ -799,7 +799,7 @@
     }	   ,
 	       {
         "type": "Microsoft.KeyVault/vaults",
-        "apiVersion": "2019-09-01",
+        "apiVersion": "2021-11-01-preview",
         "name": "[parameters('keyVaultName')]",
         "location": "[parameters('location')]",
         "properties": {
@@ -807,7 +807,7 @@
           "enableSoftDelete": false,
           "accessPolicies": [ {
                 "tenantId": "[variables('tenantId')]",
-                "objectId": "[reference(concat('Microsoft.Synapse/workspaces/', parameters('SynapsewsName')), '2019-06-01-preview', 'Full').identity.principalId]",
+                "objectId": "[reference(concat('Microsoft.Synapse/workspaces/', parameters('SynapsewsName')), '2021-11-01-preview', 'Full').identity.principalId]",
                 "permissions": {
                     "keys": [],
                     "secrets": [
