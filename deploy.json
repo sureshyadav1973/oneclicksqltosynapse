@@ -110,7 +110,14 @@
       "metadata": {
         "description": "Synapse FileSystem name must be unique in subscription"
       }
-	}
+	},
+	    "keyVaultName": {
+        "type": "string",
+		     "defaultValue": "[format('keyvault{0}', uniqueString(resourceGroup().id))]",
+        "metadata": {
+          "description": "Specifies the name of the key vault."
+        }
+      }
 	  
     },
     "variables": {
@@ -149,8 +156,13 @@
         "defaultSubnetName": "default",
         "databaseName": "TargetDatabaseName1",
         "publicIpAddressId": {
-            "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPSourceServer'))]"
-        },
+            "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPSourceServer'))]"},
+		  "sqlSecretName": "SqlLoginPassword",
+        "sqlSecretValue": "[parameters('sourceSqlAuthenticationPassword')]",
+        "VMSecretName": "VMLoginPassword",
+        "VMSecretValue": "[parameters('sourceWindowsAdminPassword')]",
+        "tenantId": "[subscription().tenantId]",
+        
 		"dataFactoryLinkedServiceName": "ArmtemplateStorageLinkedService",
     "dataFactoryDataSetInName": "ArmtemplateTestDatasetIn",
     "dataFactoryDataSetOutName": "ArmtemplateTestDatasetOut",
@@ -158,6 +170,50 @@
     
         },
     "resources": [
+	    {
+        "type": "Microsoft.KeyVault/vaults",
+        "apiVersion": "2019-09-01",
+        "name": "[parameters('keyVaultName')]",
+        "location": "[parameters('location')]",
+        "properties": {
+          "tenantId": "[variables('tenantId')]",
+          "enableSoftDelete": false,
+          "accessPolicies": [],
+          "sku": {
+            "name": "Standard",
+            "family": "A"
+          },
+          "networkAcls": {
+            "defaultAction": "Allow",
+            "bypass": "AzureServices"
+          }
+        }
+      },
+      {
+        "type": "Microsoft.KeyVault/vaults/secrets",
+        "apiVersion": "2019-09-01",
+        "name": "[concat(parameters('keyVaultName'), '/', variables('sqlSecretName'))]",
+        "location": "[parameters('location')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]"
+        ],
+        "properties": {
+          "value": "[variables('sqlSecretValue')]"
+        }
+      },
+      {
+        "type": "Microsoft.KeyVault/vaults/secrets",
+        "apiVersion": "2019-09-01",
+        "name": "[concat(parameters('keyVaultName'), '/', variables('VMSecretName'))]",
+        "location": "[parameters('location')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]"
+        ],
+        "properties": {
+          "value": "[variables('VMSecretValue')]"
+        }
+      }
+	    
         {
             "type": "Microsoft.Compute/virtualMachines",
             "name": "[variables('sourceServerName')]",
