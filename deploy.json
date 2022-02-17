@@ -860,7 +860,8 @@
 	"properties": {
 		"parameters": {
 			"keyVaultName": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "[parameters('keyVaultName')]"
 			}
 		},
 		"annotations": [],
