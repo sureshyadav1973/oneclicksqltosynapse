@@ -170,49 +170,7 @@
     
         },
     "resources": [
-	    {
-        "type": "Microsoft.KeyVault/vaults",
-        "apiVersion": "2019-09-01",
-        "name": "[parameters('keyVaultName')]",
-        "location": "[parameters('location')]",
-        "properties": {
-          "tenantId": "[variables('tenantId')]",
-          "enableSoftDelete": false,
-          "accessPolicies": [],
-          "sku": {
-            "name": "Standard",
-            "family": "A"
-          },
-          "networkAcls": {
-            "defaultAction": "Allow",
-            "bypass": "AzureServices"
-          }
-        }
-      },
-      {
-        "type": "Microsoft.KeyVault/vaults/secrets",
-        "apiVersion": "2019-09-01",
-        "name": "[concat(parameters('keyVaultName'), '/', variables('sqlSecretName'))]",
-        "location": "[parameters('location')]",
-        "dependsOn": [
-          "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]"
-        ],
-        "properties": {
-          "value": "[variables('sqlSecretValue')]"
-        }
-      },
-      {
-        "type": "Microsoft.KeyVault/vaults/secrets",
-        "apiVersion": "2019-09-01",
-        "name": "[concat(parameters('keyVaultName'), '/', variables('VMSecretName'))]",
-        "location": "[parameters('location')]",
-        "dependsOn": [
-          "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]"
-        ],
-        "properties": {
-          "value": "[variables('VMSecretValue')]"
-        }
-      },
+	 
 	    
         {
             "type": "Microsoft.Compute/virtualMachines",
@@ -838,7 +796,63 @@
       },
 		     "dependsOn": [
         "[resourceId('Microsoft.Synapse/workspaces', parameters('SynapsewsName'))]" ]
-    }	   
+    }	   ,
+	       {
+        "type": "Microsoft.KeyVault/vaults",
+        "apiVersion": "2019-09-01",
+        "name": "[parameters('keyVaultName')]",
+        "location": "[parameters('location')]",
+        "properties": {
+          "tenantId": "[variables('tenantId')]",
+          "enableSoftDelete": false,
+          "accessPolicies": [ {
+                "tenantId": "[variables('tenantId')]",
+                "objectId": "[reference(concat('Microsoft.Synapse/workspaces/', parameters('SynapsewsName')), '2019-06-01-preview', 'Full').identity.principalId]",
+                "permissions": {
+                    "keys": [],
+                    "secrets": [
+                        "Get"
+		    ],
+                    "certificates": []
+                }
+            }
+			    ],
+          "sku": {
+            "name": "Standard",
+            "family": "A"
+          },
+          "networkAcls": {
+            "defaultAction": "Allow",
+            "bypass": "AzureServices"
+          }
+        },
+		         "dependsOn": [
+        "[resourceId('Microsoft.Synapse/workspaces', parameters('SynapsewsName'))]" ]
+      },
+      {
+        "type": "Microsoft.KeyVault/vaults/secrets",
+        "apiVersion": "2019-09-01",
+        "name": "[concat(parameters('keyVaultName'), '/', variables('sqlSecretName'))]",
+        "location": "[parameters('location')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]"
+        ],
+        "properties": {
+          "value": "[variables('sqlSecretValue')]"
+        }
+      },
+      {
+        "type": "Microsoft.KeyVault/vaults/secrets",
+        "apiVersion": "2019-09-01",
+        "name": "[concat(parameters('keyVaultName'), '/', variables('VMSecretName'))]",
+        "location": "[parameters('location')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]"
+        ],
+        "properties": {
+          "value": "[variables('VMSecretValue')]"
+        }
+      }
 	    
 	    
  ]
