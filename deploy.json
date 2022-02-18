@@ -1003,7 +1003,7 @@
               "identity": {
                 "type": "UserAssigned",
                 "userAssignedIdentities": {
-                  "[format('{0}', parameters('deploymentScriptUAMId'))]": {}
+                  "[format('{0}', parameters('deploymentScriptUAMIId'))]": {}
                 }
               },
               "properties": {
