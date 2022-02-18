@@ -898,7 +898,7 @@
             "value": "[variables('synapsePSScriptLocation')]"
           },
           "synapseScriptArguments": {
-                       "value": "[format('-SynapseWorkspaceName {0} -KeyVaultName ${1} -UAMIIdentityID {2} ', parameters('SynapsewsName'),parameters('keyVaultName'),parameters('deploymentScriptUAMIId')]"
+                       "value": "[format('-SynapseWorkspaceName {0} -KeyVaultName ${1} -UAMIIdentityID {2} ', parameters('SynapsewsName'),parameters('keyVaultName'),parameters('deploymentScriptUAMIId'))]"
           }
         },
         "template": {
