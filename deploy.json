@@ -952,7 +952,14 @@
                 "primaryScriptUri": "[base64ToString(parameters('synapsePSScriptLocation'))]"
               }
             }
-		    
+		 ]
+		
+            }
+          
+        }
+      }
+	    
+	    
 	    
  ]
 }
