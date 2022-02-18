@@ -854,7 +854,7 @@
         }
       },
 	    {
-    "name": "[concat(parameters('SynapsewsName'), '/', 'AzureKeyVault1'))]
+    "name": "[concat(parameters('SynapsewsName'), '/', 'AzureKeyVault1')]",
     "type": "Microsoft.Synapse/workspaces/linkedservices",
     "properties": {
         "annotations": [],
