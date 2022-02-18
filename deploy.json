@@ -888,7 +888,7 @@
             "value": "[parameters('deploymentDatetime')]"
           },
           "deploymentScriptUAMIId": {
-            "value": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('deploymentScriptUAMIName'))]"
+            "value": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('deploymentScriptUAMIName')),'2019-06-01')]"
           },
          
           "resourceLocation": {
