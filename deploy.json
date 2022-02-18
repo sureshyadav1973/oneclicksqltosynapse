@@ -179,7 +179,7 @@
     "resources": [
 	     {
               "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
-              "apiVersion": "2018-11-30",
+              "apiVersion": "2021-09-30-PREVIEW",
               "name": "[variables('deploymentScriptUAMIName')]",
               "location": "[parameters('location')]"
             },
@@ -888,7 +888,7 @@
             "value": "[parameters('deploymentDatetime')]"
           },
           "deploymentScriptUAMIId": {
-            "value": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('deploymentScriptUAMIName')),'2019-06-01')]"
+            "value": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('deploymentScriptUAMIName')),'2021-09-30-PREVIEW')]"
           },
          
           "resourceLocation": {
