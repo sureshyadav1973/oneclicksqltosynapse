@@ -1021,9 +1021,7 @@
             }
           
         }
-      },
-              "dependsOn": [
-               "[resourceId('Microsoft.Resources/deployments', 'managedidentitydeploy')]"
+      }
 	    
 	    
 	    
