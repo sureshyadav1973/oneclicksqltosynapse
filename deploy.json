@@ -866,23 +866,6 @@
           "value": "[variables('VMSecretValue')]"
         }
       },
-	    {
-    "name": "[concat(parameters('SynapsewsName'), '/', 'AzureKeyVault1')]",
-    "type": "Microsoft.Synapse/workspaces/linkedServices",
-		    "apiVersion": "2019-06-01-preview",
-		    
-        "dependsOn": [
-          "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]",
-		"[resourceId('Microsoft.Synapse/workspaces', parameters('SynapsewsName'))]"
-        ],
-    "properties": {
-        "annotations": [],
-        "type": "AzureKeyVault",
-        "typeProperties": {
-           		"baseUrl": "@{concat('https://',[parameters('keyVaultName')],'.vault.azure.net/')"
-        }
-    }
-},
 	    
 	     {
       "type": "Microsoft.Resources/deployments",
