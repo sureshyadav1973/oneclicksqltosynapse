@@ -180,8 +180,8 @@
 	     {
               "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
               "apiVersion": "2018-11-30",
-              "name": "[parameters('deploymentScriptUAMIName')]",
-              "location": "[parameters('resourceLocation')]"
+              "name": "[variables('deploymentScriptUAMIName')]",
+              "location": "[parameters('location')]"
             },
 	 
 	    
