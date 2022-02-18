@@ -887,7 +887,7 @@
           "deploymentDatetime": {
             "value": "[parameters('deploymentDatetime')]"
           },
-          "deploymentScriptUAMIName": {
+          "deploymentScriptUAMIId": {
             "value": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('deploymentScriptUAMIName')),'2021-09-30-PREVIEW')]"
           },
          
@@ -898,7 +898,7 @@
             "value": "[variables('synapsePSScriptLocation')]"
           },
           "synapseScriptArguments": {
-                       "value": "[format('-SynapseWorkspaceName {0} -KeyVaultName ${1} -UAMIIdentityID {2} ', parameters('SynapsewsName'),parameters('keyVaultName'),parameters('deploymentScriptUAMIName'))]"
+                       "value": "[format('-SynapseWorkspaceName {0} -KeyVaultName ${1} -UAMIIdentityID {2} ', parameters('SynapsewsName'),parameters('keyVaultName'),reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('deploymentScriptUAMIName')),'2021-09-30-PREVIEW'))]"
           }
         },
         "template": {
@@ -940,7 +940,7 @@
               "identity": {
                 "type": "UserAssigned",
                 "userAssignedIdentities": {
-                  "[format('{0}', parameters('deploymentScriptUAMIName'))]": {}
+                  "[format('{0}', parameters('deploymentScriptUAMId'))]": {}
                 }
               },
               "properties": {
