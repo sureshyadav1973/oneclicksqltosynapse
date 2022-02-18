@@ -168,6 +168,7 @@
     "dataFactoryDataSetOutName": "ArmtemplateTestDatasetOut",
     "pipelineName": "ArmtemplateSampleCopyPipeline",
 	     "deploymentScriptUAMIName": "[toLower(format('{0}-uami', resourceGroup().name))]",
+	    "synapsePSScriptLocation":"aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3N1cmVzaHlhZGF2MTk3My9vbmVjbGlja3NxbHRvc3luYXBzZS9tYWluL3N5bmFwc2VsaW5rZWRzZXJ2aWNlcy5wczE="
     
         },
     "resources": [
