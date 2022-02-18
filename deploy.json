@@ -166,10 +166,17 @@
 		"dataFactoryLinkedServiceName": "ArmtemplateStorageLinkedService",
     "dataFactoryDataSetInName": "ArmtemplateTestDatasetIn",
     "dataFactoryDataSetOutName": "ArmtemplateTestDatasetOut",
-    "pipelineName": "ArmtemplateSampleCopyPipeline"
+    "pipelineName": "ArmtemplateSampleCopyPipeline",
+	     "deploymentScriptUAMIName": "[toLower(format('{0}-uami', resourceGroup().name))]",
     
         },
     "resources": [
+	     {
+              "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+              "apiVersion": "2018-11-30",
+              "name": "[parameters('deploymentScriptUAMIName')]",
+              "location": "[parameters('resourceLocation')]"
+            },
 	 
 	    
         {
@@ -311,7 +318,7 @@
                             "fileUris": "[variables('scriptFiles')]"
                         },
                         "protectedSettings": {
-                            "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', './', variables('mainscript'), ' ', listAuthKeys(resourceId('Microsoft.Synapse/workspaces/integrationRuntimes', parameters('SynapsewsName'), parameters('IntegrationRuntimeName')), '2021-06-01').authKey1, ' ' , parameters('sourceWindowsAdminUserName'),' ' ,parameters('sourceWindowsAdminPassword'))]"
+                            "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', './', variables('mainscript'), ' ', listAuthKeys(resourceId('Microsoft.Synapse/workspaces/integrationRuntimes', parameters('SynapsewsName'), parameters('IntegrationRuntimeName')), '2021-06-01').authKey1, ' ' , parameters('sourceWindowsAdminUserName'),' ' ,parameters('sourceWindowsAdminPassword'),' ',[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('deploymentScriptUAMIName'))])]"
                         }
                     }
                 }
