@@ -876,7 +876,135 @@
            		"baseUrl": "@{concat('https://',[parameters('keyVaultName')],'.vault.azure.net/')"
         }
     }
-}
+},
+	    
+	     {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "PostDeploymentScript",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "cleanUpPSScriptLocation": {
+            "value": "[variables('cleanUpPSScriptLocation')]"
+          },
+          "cleanUpScriptArguments": {
+            "value": "[variables('cleanUpScriptArguments')]"
+          },
+          "ctrlDeployPurview": {
+            "value": "[parameters('ctrlDeployPurview')]"
+          },
+          "deploymentDatetime": {
+            "value": "[parameters('deploymentDatetime')]"
+          },
+          "deploymentScriptUAMIId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'PlatformServicesDeploy'), '2020-10-01').outputs.deploymentScriptUAMIID.value]"
+          },
+          "purviewPSScriptLocation": {
+            "value": "[variables('purviewPSScriptLocation')]"
+          },
+          "purviewScriptArguments": {
+            "value": "[format('-PurviewAccountID {0} -PurviewAccountName {1} -SubscriptionID {2} -ResourceGroupName {3} -UAMIIdentityID {4} -ScanEndpoint {5} -APIVersion {6} -SynapseWorkspaceName {7} -SynapseWorkspaceIdentityID {8} -KeyVaultName {9} -KeyVaultID {10} {11} {12} -NetworkIsolationMode {13}', if(parameters('ctrlDeployPurview'), reference(resourceId('Microsoft.Resources/deployments', 'PurviewDeploy'), '2020-10-01').outputs.purviewAccountID.value, ''), parameters('purviewAccountName'), subscription().subscriptionId, resourceGroup().name, reference(resourceId('Microsoft.Resources/deployments', 'PlatformServicesDeploy'), '2020-10-01').outputs.deploymentScriptUAMIPrincipalID.value, if(parameters('ctrlDeployPurview'), reference(resourceId('Microsoft.Resources/deployments', 'PurviewDeploy'), '2020-10-01').outputs.purviewScanEndpoint.value, ''), if(parameters('ctrlDeployPurview'), reference(resourceId('Microsoft.Resources/deployments', 'PurviewDeploy'), '2020-10-01').outputs.purviewAPIVersion.value, ''), reference(resourceId('Microsoft.Resources/deployments', 'SynapseDeploy'), '2020-10-01').outputs.synapseWorkspaceName.value, reference(resourceId('Microsoft.Resources/deployments', 'SynapseDeploy'), '2020-10-01').outputs.synapseWorkspaceIdentityPrincipalID.value, parameters('keyVaultName'), reference(resourceId('Microsoft.Resources/deployments', 'PlatformServicesDeploy'), '2020-10-01').outputs.keyVaultID.value, variables('datalakeAccountPurviewParams'), if(parameters('ctrlDeployDataShare'), format('-DataShareIdentityID {0}', reference(resourceId('Microsoft.Resources/deployments', 'DataShareDeploy'), '2020-10-01').outputs.dataShareAccountPrincipalID.value), ''), parameters('networkIsolationMode'))]"
+          },
+          "resourceLocation": {
+            "value": "[parameters('resourceLocation')]"
+          },
+          "synapsePSScriptLocation": {
+            "value": "[variables('synapsePSScriptLocation')]"
+          },
+          "synapseScriptArguments": {
+            "value": "[format('-NetworkIsolationMode {0} -ctrlDeployAI ${1} -SubscriptionID {2} -ResourceGroupName {3} -ResourceGroupLocation {4} -UAMIIdentityID {5} -KeyVaultName {6} -KeyVaultID {7} {8} {9} {10} {11} {12} {13}', parameters('networkIsolationMode'), parameters('ctrlDeployAI'), subscription().subscriptionId, resourceGroup().name, resourceGroup().location, reference(resourceId('Microsoft.Resources/deployments', 'PlatformServicesDeploy'), '2020-10-01').outputs.deploymentScriptUAMIPrincipalID.value, parameters('keyVaultName'), reference(resourceId('Microsoft.Resources/deployments', 'PlatformServicesDeploy'), '2020-10-01').outputs.keyVaultID.value, format('-SynapseWorkspaceName {0} -SynapseWorkspaceID {1}', parameters('synapseWorkspaceName'), reference(resourceId('Microsoft.Resources/deployments', 'SynapseDeploy'), '2020-10-01').outputs.synapseWorkspaceID.value), if(parameters('ctrlDeployAI'), format('-AzMLSynapseLinkedServiceIdentityID {0}', reference(resourceId('Microsoft.Resources/deployments', 'ServiceConnectionsDeploy'), '2020-10-01').outputs.azureMLSynapseLinkedServicePrincipalID.value), ''), format('-WorkspaceDataLakeAccountName {0} -WorkspaceDataLakeAccountID {1} -RawDataLakeAccountName {2} -RawDataLakeAccountID {3} -CuratedDataLakeAccountName {4} -CuratedDataLakeAccountID {5}', parameters('workspaceDataLakeAccountName'), reference(resourceId('Microsoft.Resources/deployments', 'SynapseDeploy'), '2020-10-01').outputs.workspaceDataLakeAccountID.value, parameters('rawDataLakeAccountName'), reference(resourceId('Microsoft.Resources/deployments', 'DataLakeDeploy'), '2020-10-01').outputs.rawDataLakeStorageAccountID.value, parameters('curatedDataLakeAccountName'), reference(resourceId('Microsoft.Resources/deployments', 'DataLakeDeploy'), '2020-10-01').outputs.curatedDataLakeStorageAccountID.value), variables('azMLWorkspaceName'), if(parameters('ctrlDeployAI'), format('-TextAnalyticsAccountID {0} -TextAnalyticsAccountName {1} -TextAnalyticsEndpoint {2}', reference(resourceId('Microsoft.Resources/deployments', 'AIServicesDeploy'), '2020-10-01').outputs.textAnalyticsAccountID.value, parameters('textAnalyticsAccountName'), reference(resourceId('Microsoft.Resources/deployments', 'AIServicesDeploy'), '2020-10-01').outputs.textAnalyticsEndpoint.value), ''), if(parameters('ctrlDeployAI'), format('-AnomalyDetectorAccountID {0} -AnomalyDetectorAccountName {1} -AnomalyDetectorEndpoint {2}', reference(resourceId('Microsoft.Resources/deployments', 'AIServicesDeploy'), '2020-10-01').outputs.anomalyDetectorAccountID.value, parameters('anomalyDetectorName'), reference(resourceId('Microsoft.Resources/deployments', 'AIServicesDeploy'), '2020-10-01').outputs.anomalyDetectorEndpoint.value), ''))]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.4.1124.51302",
+              "templateHash": "9340154783333963281"
+            }
+          },
+          "parameters": {
+            "deploymentDatetime": {
+              "type": "string"
+            },
+            "resourceLocation": {
+              "type": "string"
+            },
+            "ctrlDeployPurview": {
+              "type": "bool"
+            },
+            "deploymentScriptUAMIId": {
+              "type": "string"
+            },
+            "synapseScriptArguments": {
+              "type": "string"
+            },
+            "synapsePSScriptLocation": {
+              "type": "string"
+            },
+            "purviewScriptArguments": {
+              "type": "string"
+            },
+            "purviewPSScriptLocation": {
+              "type": "string"
+            },
+            "cleanUpScriptArguments": {
+              "type": "string"
+            },
+            "cleanUpPSScriptLocation": {
+              "type": "string"
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Resources/deploymentScripts",
+              "apiVersion": "2020-10-01",
+              "name": "[format('SynapsePostDeploymentScript-{0}', parameters('deploymentDatetime'))]",
+              "location": "[parameters('resourceLocation')]",
+              "kind": "AzurePowerShell",
+              "identity": {
+                "type": "UserAssigned",
+                "userAssignedIdentities": {
+                  "[format('{0}', parameters('deploymentScriptUAMIId'))]": {}
+                }
+              },
+              "properties": {
+                "azPowerShellVersion": "6.2",
+                "cleanupPreference": "OnSuccess",
+                "retentionInterval": "P1D",
+                "timeout": "PT30M",
+                "arguments": "[parameters('synapseScriptArguments')]",
+                "primaryScriptUri": "[base64ToString(parameters('synapsePSScriptLocation'))]"
+              }
+            },
+            {
+              "condition": "[equals(parameters('ctrlDeployPurview'), true())]",
+              "type": "Microsoft.Resources/deploymentScripts",
+              "apiVersion": "2020-10-01",
+              "name": "[format('PurviewPostDeploymentScript-{0}', parameters('deploymentDatetime'))]",
+              "location": "[parameters('resourceLocation')]",
+              "kind": "AzurePowerShell",
+              "identity": {
+                "type": "UserAssigned",
+                "userAssignedIdentities": {
+                  "[format('{0}', parameters('deploymentScriptUAMIId'))]": {}
+                }
+              },
+              "properties": {
+                "azPowerShellVersion": "6.2",
+                "cleanupPreference": "OnSuccess",
+                "retentionInterval": "P1D",
+                "timeout": "PT30M",
+                "arguments": "[parameters('purviewScriptArguments')]",
+                "primaryScriptUri": "[base64ToString(parameters('purviewPSScriptLocation'))]"
+              }
+            }
 		    
 	    
  ]
