@@ -854,24 +854,18 @@
         }
       },
 	    {
-	"name": "keyVaultLinkedservice",
-       "type": "Microsoft.Synapse/workspaces/linkedservices",
-          "apiVersion": "2018-06-01",
-	"properties": {
-		"parameters": {
-			"keyVaultName": {
-				"type": "string",
-				"defaultValue": "[parameters('keyVaultName')]"
-			}
-		},
-		"annotations": [],
-		"type": "AzureKeyVault",
-		"typeProperties": {
-			"baseUrl": "@{concat('https://',linkedService().keyVaultName,'.vault.azure.net/')}"
-		}
-	}
+    "name": "[concat(parameters('SynapsewsName'), '/', 'AzureKeyVault1'))]
+    "type": "Microsoft.Synapse/workspaces/linkedservices",
+    "properties": {
+        "annotations": [],
+        "type": "AzureKeyVault",
+        "typeProperties": {
+            "baseUrl": "https://keyvaultr6illo6qzn4g4.vault.azure.net/"
+		"baseUrl": "@{concat('https://',[parameters('keyVaultName')],'.vault.azure.net/')
+        }
+    }
 }
-	    
+		    
 	    
  ]
 }
