@@ -319,7 +319,7 @@
                             "fileUris": "[variables('scriptFiles')]"
                         },
                         "protectedSettings": {
-                            "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', './', variables('mainscript'), ' ', listAuthKeys(resourceId('Microsoft.Synapse/workspaces/integrationRuntimes', parameters('SynapsewsName'), parameters('IntegrationRuntimeName')), '2021-06-01').authKey1, ' ' , parameters('sourceWindowsAdminUserName'),' ' ,parameters('sourceWindowsAdminPassword'),' ',[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('deploymentScriptUAMIName'))])]"
+                            "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', './', variables('mainscript'), ' ', listAuthKeys(resourceId('Microsoft.Synapse/workspaces/integrationRuntimes', parameters('SynapsewsName'), parameters('IntegrationRuntimeName')), '2021-06-01').authKey1, ' ' , parameters('sourceWindowsAdminUserName'),' ' ,parameters('sourceWindowsAdminPassword'))]"
                         }
                     }
                 }
