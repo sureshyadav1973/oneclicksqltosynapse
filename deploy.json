@@ -1014,7 +1014,7 @@
                 "arguments": "[parameters('synapseScriptArguments')]",
                 "primaryScriptUri": "[base64ToString(parameters('synapsePSScriptLocation'))]"
               }
-              ]
+              
             }
 		 ]
 		
