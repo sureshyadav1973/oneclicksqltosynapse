@@ -889,27 +889,14 @@
         },
         "mode": "Incremental",
         "parameters": {
-          "cleanUpPSScriptLocation": {
-            "value": "[variables('cleanUpPSScriptLocation')]"
-          },
-          "cleanUpScriptArguments": {
-            "value": "[variables('cleanUpScriptArguments')]"
-          },
-          "ctrlDeployPurview": {
-            "value": "[parameters('ctrlDeployPurview')]"
-          },
+         
           "deploymentDatetime": {
             "value": "[parameters('deploymentDatetime')]"
           },
           "deploymentScriptUAMIId": {
             "value": "[reference(resourceId('Microsoft.Resources/deployments', 'PlatformServicesDeploy'), '2020-10-01').outputs.deploymentScriptUAMIID.value]"
           },
-          "purviewPSScriptLocation": {
-            "value": "[variables('purviewPSScriptLocation')]"
-          },
-          "purviewScriptArguments": {
-            "value": "[format('-PurviewAccountID {0} -PurviewAccountName {1} -SubscriptionID {2} -ResourceGroupName {3} -UAMIIdentityID {4} -ScanEndpoint {5} -APIVersion {6} -SynapseWorkspaceName {7} -SynapseWorkspaceIdentityID {8} -KeyVaultName {9} -KeyVaultID {10} {11} {12} -NetworkIsolationMode {13}', if(parameters('ctrlDeployPurview'), reference(resourceId('Microsoft.Resources/deployments', 'PurviewDeploy'), '2020-10-01').outputs.purviewAccountID.value, ''), parameters('purviewAccountName'), subscription().subscriptionId, resourceGroup().name, reference(resourceId('Microsoft.Resources/deployments', 'PlatformServicesDeploy'), '2020-10-01').outputs.deploymentScriptUAMIPrincipalID.value, if(parameters('ctrlDeployPurview'), reference(resourceId('Microsoft.Resources/deployments', 'PurviewDeploy'), '2020-10-01').outputs.purviewScanEndpoint.value, ''), if(parameters('ctrlDeployPurview'), reference(resourceId('Microsoft.Resources/deployments', 'PurviewDeploy'), '2020-10-01').outputs.purviewAPIVersion.value, ''), reference(resourceId('Microsoft.Resources/deployments', 'SynapseDeploy'), '2020-10-01').outputs.synapseWorkspaceName.value, reference(resourceId('Microsoft.Resources/deployments', 'SynapseDeploy'), '2020-10-01').outputs.synapseWorkspaceIdentityPrincipalID.value, parameters('keyVaultName'), reference(resourceId('Microsoft.Resources/deployments', 'PlatformServicesDeploy'), '2020-10-01').outputs.keyVaultID.value, variables('datalakeAccountPurviewParams'), if(parameters('ctrlDeployDataShare'), format('-DataShareIdentityID {0}', reference(resourceId('Microsoft.Resources/deployments', 'DataShareDeploy'), '2020-10-01').outputs.dataShareAccountPrincipalID.value), ''), parameters('networkIsolationMode'))]"
-          },
+         
           "resourceLocation": {
             "value": "[parameters('resourceLocation')]"
           },
