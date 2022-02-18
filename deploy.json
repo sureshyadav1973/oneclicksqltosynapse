@@ -860,8 +860,7 @@
         "annotations": [],
         "type": "AzureKeyVault",
         "typeProperties": {
-            "baseUrl": "https://keyvaultr6illo6qzn4g4.vault.azure.net/"
-		"baseUrl": "@{concat('https://',[parameters('keyVaultName')],'.vault.azure.net/')
+           		"baseUrl": "@{concat('https://',[parameters('keyVaultName')],'.vault.azure.net/')
         }
     }
 }
