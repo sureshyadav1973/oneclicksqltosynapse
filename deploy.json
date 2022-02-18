@@ -857,6 +857,10 @@
     "name": "[concat(parameters('SynapsewsName'), '/', 'AzureKeyVault1')]",
     "type": "Microsoft.Synapse/workspaces/linkedservices",
 		    "apiVersion": "2018-06-01",
+		    
+        "dependsOn": [
+          "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]"
+        ],
     "properties": {
         "annotations": [],
         "type": "AzureKeyVault",
