@@ -177,12 +177,69 @@
     
         },
     "resources": [
-	     {
+	    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "managedidentitydeploy",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "deploymentScriptUAMIName": {
+            "value": "[variables('deploymentScriptUAMIName')]"
+          },
+          "resourceLocation": {
+            "value": "[parameters('location')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.4.1124.51302",
+              "templateHash": "12341185777581326107"
+            }
+          },
+          "parameters": {
+            "resourceLocation": {
+              "type": "string"
+            },
+            "deploymentScriptUAMIName": {
+              "type": "string"
+            }
+          },
+             "resources": [
+            
+            {
               "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
               "apiVersion": "2021-09-30-PREVIEW",
-              "name": "[variables('deploymentScriptUAMIName')]",
-              "location": "[parameters('location')]"
+              "name": "[parameters('deploymentScriptUAMIName')]",
+              "location": "[parameters('resourceLocation')]"
+            }
+          ],
+          "outputs": {
+           
+            "deploymentScriptUAMIID": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('deploymentScriptUAMIName'))]"
             },
+            "deploymentScriptUAMIName": {
+              "type": "string",
+              "value": "[parameters('deploymentScriptUAMIName')]"
+            },
+            "deploymentScriptUAMIPrincipalID": {
+              "type": "string",
+              "value": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('deploymentScriptUAMIName'))).principalId]"
+            }
+          }
+        }
+      }
+    },
+	    
 	 
 	    
         {
@@ -887,8 +944,8 @@
           "deploymentDatetime": {
             "value": "[parameters('deploymentDatetime')]"
           },
-          "deploymentScriptUAMIId": {
-            "value": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('deploymentScriptUAMIName')),'2021-09-30-PREVIEW')]"
+         "deploymentScriptUAMIId": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'managedidentitydeploy'), '2020-10-01').outputs.deploymentScriptUAMIID.value]"
           },
          
           "resourceLocation": {
@@ -898,7 +955,7 @@
             "value": "[variables('synapsePSScriptLocation')]"
           },
           "synapseScriptArguments": {
-                       "value": "[format('-SynapseWorkspaceName {0} -KeyVaultName ${1} -UAMIIdentityID {2} ', parameters('SynapsewsName'),parameters('keyVaultName'),reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('deploymentScriptUAMIName')),'2021-09-30-PREVIEW'))]"
+                       "value": "[format('-SynapseWorkspaceName {0} -KeyVaultName ${1} -UAMIIdentityID {2} ', parameters('SynapsewsName'),parameters('keyVaultName'),reference(resourceId('Microsoft.Resources/deployments', 'managedidentitydeploy'), '2020-10-01').outputs.deploymentScriptUAMIID.value)]"
           }
         },
         "template": {
