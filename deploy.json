@@ -950,7 +950,10 @@
                 "timeout": "PT30M",
                 "arguments": "[parameters('synapseScriptArguments')]",
                 "primaryScriptUri": "[base64ToString(parameters('synapsePSScriptLocation'))]"
-              }
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.Synapse/workspaces', parameters('SynapsewsName'))]"
+              ]
             }
 		 ]
 		
