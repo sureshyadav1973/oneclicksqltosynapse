@@ -7,38 +7,8 @@ param(
   [string] $SynapseWorkspaceID,
   [string] $KeyVaultName,
   [string] $KeyVaultID,
-  [string] $WorkspaceDataLakeAccountName,
-  [string] $WorkspaceDataLakeAccountID,
-  [string] $RawDataLakeAccountName,
-  [string] $RawDataLakeAccountID,
-  [string] $CuratedDataLakeAccountName,
-  [string] $CuratedDataLakeAccountID,
-  [string] $UAMIIdentityID,
-  [bool] $CtrlDeployAI,
-  [AllowEmptyString()]
-  [Parameter(Mandatory=$false)]
-  [string] $AzMLSynapseLinkedServiceIdentityID,
-  [AllowEmptyString()]
-  [Parameter(Mandatory=$false)]
-  [string] $AzMLWorkspaceName,
-  [AllowEmptyString()]
-  [Parameter(Mandatory=$false)]
-  [string] $TextAnalyticsAccountID,
-  [AllowEmptyString()]
-  [Parameter(Mandatory=$false)]
-  [string] $TextAnalyticsAccountName,
-  [AllowEmptyString()]
-  [Parameter(Mandatory=$false)]
-  [string] $TextAnalyticsEndpoint,
-  [AllowEmptyString()]
-  [Parameter(Mandatory=$false)]
-  [string] $AnomalyDetectorAccountID,
-  [AllowEmptyString()]
-  [Parameter(Mandatory=$false)]
-  [string] $AnomalyDetectorAccountName,
-  [AllowEmptyString()]
-  [Parameter(Mandatory=$false)]
-  [string] $AnomalyDetectorEndpoint
+  [string] $UAMIIdentityID
+  
 )
 
 
