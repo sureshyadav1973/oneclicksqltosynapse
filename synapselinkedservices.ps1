@@ -1,12 +1,7 @@
 param(
-  [string] $NetworkIsolationMode,
-  [string] $SubscriptionID,
-  [string] $ResourceGroupName,
-  [string] $ResourceGroupLocation,
+
   [string] $SynapseWorkspaceName,
-  [string] $SynapseWorkspaceID,
-  [string] $KeyVaultName,
-  [string] $KeyVaultID,
+   [string] $KeyVaultName,
   [string] $UAMIIdentityID
   
 )
@@ -113,27 +108,6 @@ Write-Host "Assign Synapse Administrator Role to UAMI..."
 
 Invoke-RestMethod -Method Post -ContentType "application/json" -Uri $uri -Headers $headers -Body $body
 
-#------------------------------------------------------------------------------------------------------------
-# CONTROL PLANE OPERATION: ASSIGN SYNAPSE APACHE SPARK ADMINISTRATOR TO AZURE ML LINKED SERVICE MSI
-# If AI Services are deployed, then Azure ML MSI needs Synapse Spark Admin rights to use Spark clusters as compute
-#------------------------------------------------------------------------------------------------------------
-
-if (-not ([string]::IsNullOrEmpty($AzMLSynapseLinkedServiceIdentityID))) {
-  #Assign Synapse Apache Spark Administrator Role to Azure ML Linked Service Managed Identity
-  # https://docs.microsoft.com/en-us/azure/machine-learning/how-to-link-synapse-ml-workspaces#link-workspaces-with-the-python-sdk
-
-  $body = "{
-    roleId: ""c3a6d2f1-a26f-4810-9b0f-591308d5cbf1"",
-    principalId: ""$AzMLSynapseLinkedServiceIdentityID""
-  }"
-
-  Write-Host "Assign Synapse Apache Spark Administrator Role to Azure ML Linked Service Managed Identity..."
-  Invoke-RestMethod -Method Post -ContentType "application/json" -Uri $uri -Headers $headers -Body $body
-
-  # From: https://docs.microsoft.com/en-us/azure/synapse-analytics/security/how-to-manage-synapse-rbac-role-assignments
-  # Changes made to Synapse RBAC role assignments may take 2-5 minutes to take effect.
-  # Retry logic required before calling further APIs
-}
 
 #------------------------------------------------------------------------------------------------------------
 # DATA PLANE OPERATION: CREATE AZURE KEY VAULT LINKED SERVICE
@@ -154,13 +128,3 @@ $body = "{
 
 Save-SynapseLinkedService $SynapseWorkspaceName $KeyVaultName $body
 
-
-#------------------------------------------------------------------------------------------------------------
-# CONTROL PLANE OPERATOR: DISABLE PUBLIC NETWORK ACCESS
-# For vNet-integrated deployments, disable public network access. Access to Synapse only through private endpoints.
-#------------------------------------------------------------------------------------------------------------
-
-if ($NetworkIsolationMode -eq "vNet") {
-  $body = "{properties:{publicNetworkAccess:""Disabled""}}"
-  Set-SynapseControlPlaneOperation -SynapseWorkspaceID $SynapseWorkspaceID -HttpRequestBody $body
-}
