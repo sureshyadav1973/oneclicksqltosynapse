@@ -1015,7 +1015,7 @@
                 "primaryScriptUri": "[base64ToString(parameters('synapsePSScriptLocation'))]"
               },
               "dependsOn": [
-                "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('deploymentScriptUAMIName'))]"
+               "[resourceId('Microsoft.Resources/deployments', 'managedidentitydeploy')]"
               ]
             }
 		 ]
