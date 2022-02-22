@@ -955,7 +955,7 @@
             "value": "[variables('synapsePSScriptLocation')]"
           },
           "synapseScriptArguments": {
-                       "value": "[format('-SynapseWorkspaceName {0} -KeyVaultName ${1} -UAMIIdentityID {2} ', parameters('SynapsewsName'),parameters('keyVaultName'),reference(resourceId('Microsoft.Resources/deployments', 'managedidentitydeploy'), '2020-10-01').outputs.deploymentScriptUAMIID.value)]"
+                       "value": "[format('-SynapseWorkspaceName {0} -KeyVaultName {1} -UAMIIdentityID {2} ', parameters('SynapsewsName'),parameters('keyVaultName'),reference(resourceId('Microsoft.Resources/deployments', 'managedidentitydeploy'), '2020-10-01').outputs.deploymentScriptUAMIID.value)]"
           }
         },
         "template": {
