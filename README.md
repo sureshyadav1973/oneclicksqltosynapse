@@ -11,6 +11,8 @@ exportddl.ps1             - Extract database objects DDL
 
 gatewayinstall.ps1        - Install SHIR on VM and register with ADF
 
+synapselinkedservices.ps1 - Install Synapse linked services
+
 Te backup file use TPC-DS dataset ,below is the stor sales ER diagram
 
 ![image](https://user-images.githubusercontent.com/68124819/146087954-cce3d4a4-dd36-4f22-8c95-c7f106d1afa2.png)
