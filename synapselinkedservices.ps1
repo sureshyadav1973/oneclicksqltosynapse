@@ -2,7 +2,11 @@ param(
 
   [string] $SynapseWorkspaceName,
    [string] $KeyVaultName,
-  [string] $UAMIIdentityID
+  [string] $UAMIIdentityID,
+  [string] $sourceServerName,
+   [string] $VMSecretName,
+  [string] $IntegrationRuntimeName,
+  [string] $sourceWindowsAdminUserName
   
 )
 
@@ -123,28 +127,28 @@ Save-SynapseLinkedService $SynapseWorkspaceName $KeyVaultName $body
 # DATA PLANE OPERATION: CREATE FILESYSTEM LINKED SERVICES TO VM
 #------------------------------------------------------------------------------------------------------------
 $body = "{
-    name: ""$vmname"",
+    name: ""$sourceServerName"",
     properties: {
         parameters: 
         annotations: [],
         type: ""FileServer"",
         typeProperties: {
             host: ""c:\\\\"",
-            userId: ""$vmlogin"",
+            userId: ""$sourceWindowsAdminUserName"",
             password: {
                 type: ""AzureKeyVaultSecret"",
                 store: {
                     referenceName: ""$KeyVaultName"",
                     type: ""LinkedServiceReference""
                 },
-                secretName: ""$Vsecretnameforvmlogin""
+                secretName: ""$VMSecretName""
             }
         },
         connectVia: {
-            referenceName: ""$runtimename"",
+            referenceName: ""$IntegrationRuntimeName"",
             type: ""IntegrationRuntimeReference""
         }
     }
-}"
+} "
 
-Save-SynapseLinkedService $SynapseWorkspaceName $vmname $body
+Save-SynapseLinkedService $SynapseWorkspaceName $sourceServerName $body
