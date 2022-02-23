@@ -123,31 +123,28 @@ Save-SynapseLinkedService $SynapseWorkspaceName $KeyVaultName $body
 # DATA PLANE OPERATION: CREATE FILESYSTEM LINKED SERVICES TO VM
 #------------------------------------------------------------------------------------------------------------
 $body = "{
-    name: ""VMFileServer"",
-    "properties": {
-        "parameters": {
-            "sureshsqlid": {
-                "type": "String",
-                "defaultValue": "sureshsqladmin"
-            }
-        },
-        "annotations": [],
-        "type": "FileServer",
-        "typeProperties": {
-            "host": "c:\\\\",
-            "userId": "@{linkedService().sureshsqlid}",
-            "password": {
-                "type": "AzureKeyVaultSecret",
-                "store": {
-                    "referenceName": "keyvaultivyag64ugne3o",
-                    "type": "LinkedServiceReference"
+    name: ""$vmname"",
+    properties: {
+        parameters: 
+        annotations: [],
+        type: ""FileServer"",
+        typeProperties: {
+            host: ""c:\\\\"",
+            userId: ""$vmlogin"",
+            password: {
+                type: ""AzureKeyVaultSecret"",
+                store: {
+                    referenceName: ""$KeyVaultName"",
+                    type: ""LinkedServiceReference""
                 },
-                "secretName": "VMLoginPassword"
+                secretName: ""$Vsecretnameforvmlogin""
             }
         },
-        "connectVia": {
-            "referenceName": "irivyag64ugne3o",
-            "type": "IntegrationRuntimeReference"
+        connectVia: {
+            referenceName: ""$runtimename"",
+            type: ""IntegrationRuntimeReference""
         }
     }
-}
+}"
+
+Save-SynapseLinkedService $SynapseWorkspaceName $vmname $body
