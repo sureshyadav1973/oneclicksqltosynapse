@@ -954,12 +954,15 @@
 	 "sourceServerName": {
             "value": "[variables('sourceServerName')]"
           },
+		"sourceWindowsAdminUserName": {
+			  "value": "[parameters('sourceWindowsAdminUserName')]"
+          },
 		
           "synapsePSScriptLocation": {
             "value": "[variables('synapsePSScriptLocation')]"
           },
           "synapseScriptArguments": {
-                       "value": "[format('-SynapseWorkspaceName {0} -KeyVaultName {1} -UAMIIdentityID {2} -sourceServerName {3}', parameters('SynapsewsName'),parameters('keyVaultName'),reference(resourceId('Microsoft.Resources/deployments', 'managedidentitydeploy'), '2020-10-01').outputs.deploymentScriptUAMIID.value,variables('sourceServerName') )]"
+                       "value": "[format('-SynapseWorkspaceName {0} -KeyVaultName {1} -UAMIIdentityID {2} -sourceServerName {3}', parameters('SynapsewsName'),parameters('keyVaultName'),reference(resourceId('Microsoft.Resources/deployments', 'managedidentitydeploy'), '2020-10-01').outputs.deploymentScriptUAMIID.value,variables('sourceServerName') ,parameters('sourceWindowsAdminUserName'))]"
           }
         },
         "template": {
@@ -996,6 +999,10 @@
               "type": "string"
             },
             "sourceServerName": {
+              "type": "string"
+            },
+		  "sourceWindowsAdminUserName"
+		  : {
               "type": "string"
             }
             
