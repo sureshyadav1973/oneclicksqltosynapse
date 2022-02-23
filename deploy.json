@@ -954,15 +954,19 @@
 	 "sourceServerName": {
             "value": "[variables('sourceServerName')]"
           },
-		"sourceWindowsAdminUserName": {
-			  "value": "[parameters('sourceWindowsAdminUserName')]"
+	"sourceWindowsAdminUserName": {
+            "value": "[parameters('sourceWindowsAdminUserName')]",
+		
+	"VMSecretName":{
+            "value": "[variables('VMSecretName')]"
+          },
           },
 		
           "synapsePSScriptLocation": {
             "value": "[variables('synapsePSScriptLocation')]"
           },
           "synapseScriptArguments": {
-                       "value": "[format('-SynapseWorkspaceName {0} -KeyVaultName {1} -UAMIIdentityID {2} -sourceServerName {3}', parameters('SynapsewsName'),parameters('keyVaultName'),reference(resourceId('Microsoft.Resources/deployments', 'managedidentitydeploy'), '2020-10-01').outputs.deploymentScriptUAMIID.value,variables('sourceServerName') ,parameters('sourceWindowsAdminUserName'))]"
+                       "value": "[format('-SynapseWorkspaceName {0} -KeyVaultName {1} -UAMIIdentityID {2} -sourceServerName {3} -VMSecretName {4} , parameters('SynapsewsName'),parameters('keyVaultName'),reference(resourceId('Microsoft.Resources/deployments', 'managedidentitydeploy'), '2020-10-01').outputs.deploymentScriptUAMIID.value,variables('sourceServerName') ,parameters('sourceWindowsAdminUserName'),variables('VMSecretName'))]"
           }
         },
         "template": {
@@ -1001,10 +1005,12 @@
             "sourceServerName": {
               "type": "string"
             },
-		  "sourceWindowsAdminUserName"
-		  : {
+	    "sourceWindowsAdminUserName": {
               "type": "string"
-            }
+            } .
+            "VMSecretName" : {
+              "type": "string"
+            } 
             
           },
           "resources": [
