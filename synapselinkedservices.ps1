@@ -110,7 +110,7 @@ $body = "{
 
 Write-Host "Assign Synapse Administrator Role to UAMI..."
 
-Invoke-RestMethod -Method Post -ContentType "application/json" -Uri $uri -Headers $headers -Body $body
+#Invoke-RestMethod -Method Post -ContentType "application/json" -Uri $uri -Headers $headers -Body $body
 #------------------------------------------------------------------------------------------------------------
 # DATA PLANE OPERATION: CREATE AZURE KEY VAULT LINKED SERVICE
 #------------------------------------------------------------------------------------------------------------
