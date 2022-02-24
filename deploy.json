@@ -929,7 +929,7 @@
       "apiVersion": "2020-10-01",
       "name": "PostDeploymentScript",
       "dependsOn": [
-
+	     	       "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('sourceServerName'), 'pathwayCustomScriptExtension')]",
          "[resourceId('Microsoft.Synapse/workspaces', parameters('SynapsewsName'))]"
 
             ],
