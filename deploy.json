@@ -1008,15 +1008,15 @@
             "sourceServerName": {
               "type": "string"
             },
-	    "sourceWindowsAdminUserName": {
-              "type": "string"
-            } ,
             "VMSecretName" : {
               "type": "string"
             } ,
 	"IntegrationRuntimeName": {
               "type": "string"
-            }
+            },
+	    "sourceWindowsAdminUserName": {
+              "type": "string"
+            } 
             
           },
           "resources": [
