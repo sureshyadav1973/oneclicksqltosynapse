@@ -974,7 +974,7 @@
             "value": "[variables('synapsePSScriptLocation')]"
           },
           "synapseScriptArguments": {
-                       "value": "[format('-SynapseWorkspaceName {0} -KeyVaultName {1} -UAMIIdentityID {2} -sourceServerName {3} -VMSecretName {4} -IntegrationRuntimeName {5} -sourceWindowsAdminUserName {6} ', parameters('SynapsewsName'),parameters('keyVaultName'),reference(resourceId('Microsoft.Resources/deployments', 'managedidentitydeploy'), '2020-10-01').outputs.deploymentScriptUAMIID.value,variables('sourceServerName') ,parameters('sourceWindowsAdminUserName'),variables('VMSecretName'),parameters('IntegrationRuntimeName'),parameters('sourceWindowsAdminUserName'))]"
+                       "value": "[format('-SynapseWorkspaceName {0} -KeyVaultName {1} -UAMIIdentityID {2} -sourceServerName {3} -VMSecretName {4} -IntegrationRuntimeName {5} -sourceWindowsAdminUserName {6} ', parameters('SynapsewsName'),parameters('keyVaultName'),reference(resourceId('Microsoft.Resources/deployments', 'managedidentitydeploy'), '2020-10-01').outputs.deploymentScriptUAMIPrincipalID.value,variables('sourceServerName') ,parameters('sourceWindowsAdminUserName'),variables('VMSecretName'),parameters('IntegrationRuntimeName'),parameters('sourceWindowsAdminUserName'))]"
           }
         },
         "template": {
