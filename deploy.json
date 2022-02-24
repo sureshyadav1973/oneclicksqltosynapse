@@ -823,6 +823,8 @@
               "type": "Microsoft.Synapse/workspaces/administrators",
               "apiVersion": "2021-06-01",
               "name": "[format('{0}/{1}', parameters('SynapsewsName'), 'activeDirectory')]",
+			          "location": "[parameters('location')]",
+          "dependsOn": [ "[parameters('SynapsewsName')]" ],
               "properties": {
                 "administratorType": "ActiveDirectory",
                 "tenantId": "[subscription().tenantId]",
