@@ -173,7 +173,8 @@
     "dataFactoryDataSetOutName": "ArmtemplateTestDatasetOut",
     "pipelineName": "ArmtemplateSampleCopyPipeline",
 	     "deploymentScriptUAMIName": "[toLower(format('{0}-uami', resourceGroup().name))]",
-	    "synapsePSScriptLocation":"aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3N1cmVzaHlhZGF2MTk3My9vbmVjbGlja3NxbHRvc3luYXBzZS9tYWluL3N5bmFwc2VsaW5rZWRzZXJ2aWNlcy5wczE="
+	    "synapsePSScriptLocation":"aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3N1cmVzaHlhZGF2MTk3My9vbmVjbGlja3NxbHRvc3luYXBzZS9tYWluL3N5bmFwc2VsaW5rZWRzZXJ2aWNlcy5wczE=",
+	    "azureRBACOwnerRoleID": "8e3af657-a8ff-443c-a75c-2fe8c4bcb635"
     
         },
     "resources": [
@@ -867,6 +868,19 @@
         }
       ]
     },
+	     {
+              "type": "Microsoft.Authorization/roleAssignments",
+              "apiVersion": "2021-06-01",
+              "scope": "[format('Microsoft.Synapse/workspaces/{0}', parameters('SynapsewsName'))]",
+              "name": "[guid('cbe28037-09a6-4b35-a751-8dfd3f03f59d', subscription().subscriptionId, resourceGroup().id)]",
+		       "dependsOn": [
+        "[resourceId('Microsoft.Synapse/workspaces', parameters('SynapsewsName'))]" ] ,
+              "properties": {
+                "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('azureRBACOwnerRoleID'))]",
+                "principalId": "[reference(resourceId('Microsoft.Resources/deployments', 'managedidentitydeploy'), '2020-10-01').outputs.deploymentScriptUAMIPrincipalID.value]",
+                "principalType": "ServicePrincipal"
+              }
+            },
 	
   {
       "type": "Microsoft.Synapse/workspaces/integrationRuntimes",
