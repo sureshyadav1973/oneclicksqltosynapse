@@ -870,7 +870,7 @@
     },
 	     {
               "type": "Microsoft.Authorization/roleAssignments",
-              "apiVersion": "2021-06-01",
+              "apiVersion": "2020-08-01-preview",
               "scope": "[format('Microsoft.Synapse/workspaces/{0}', parameters('SynapsewsName'))]",
               "name": "[guid('cbe28037-09a6-4b35-a751-8dfd3f03f59d', subscription().subscriptionId, resourceGroup().id)]",
 		       "dependsOn": [
